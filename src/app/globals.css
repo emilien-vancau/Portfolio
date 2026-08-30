@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TOKENS — palette source : 152451 / 2d3085 / a7e0e7 / e5ebeb
+   152451 (deep-space) est la couleur pivot, conservée partout.
+   ============================================================ */
+:root {
+  --color-deep-space: #152451; /* pivot obligatoire */
+  --color-indigo: #2d3085;
+  --color-cyan: #a7e0e7;
+  --color-mist: #e5ebeb;
+
+  /* dérivées pour donner de la profondeur sans sortir de la famille */
+  --color-ink: #0a1230;    /* fond nuit, plus sombre que deep-space */
+  --color-slate: #4a5578;  /* texte secondaire côté pro */
+  --color-ember: #d9a86c;  /* accent chaud rare, "lumière d'étoile" côté astro */
+
+  --font-display-pro: var(--font-plex-sans);
+  --font-body: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-display-astro: var(--font-fraunces);
+}
+
+@theme inline {
+  --color-deep-space: var(--color-deep-space);
+  --color-indigo: var(--color-indigo);
+  --color-cyan: var(--color-cyan);
+  --color-mist: var(--color-mist);
+  --color-ink: var(--color-ink);
+  --color-slate: var(--color-slate);
+  --color-ember: var(--color-ember);
+  --font-display-pro: var(--font-display-pro);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-display-astro: var(--font-display-astro);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   THEME SCOPES — chaque page s'enveloppe dans .theme-pro ou
+   .theme-astro ; tous les composants lisent ces variables.
+   ============================================================ */
+.theme-pro {
+  --bg: var(--color-mist);
+  --bg-raised: #ffffff;
+  --fg: var(--color-deep-space);
+  --fg-muted: var(--color-slate);
+  --accent: var(--color-indigo);
+  --accent-soft: var(--color-cyan);
+  --border: #c9d2e0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.theme-astro {
+  --bg: var(--color-ink);
+  --bg-raised: #101b3f;
+  --fg: var(--color-mist);
+  --fg-muted: #9fb0d6;
+  --accent: var(--color-cyan);
+  --accent-soft: var(--color-indigo);
+  --border: #26315f;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ============================================================
+   STARFIELD — animation discrète, respecte prefers-reduced-motion
+   ============================================================ */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--min-o, 0.15); transform: scale(1); }
+  50% { opacity: var(--max-o, 0.9); transform: scale(1.15); }
+}
+
+.star {
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none;
+    opacity: 0.6;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* label mono type utilitaire, façon coordonnées / métadonnées */
+.meta-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
