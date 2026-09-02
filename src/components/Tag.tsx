@@ -8,10 +8,10 @@ export default function Tag({
   return (
     <span
       className={
-        "meta-label inline-flex items-center rounded-full border px-2.5 py-1 " +
+        "meta-label inline-flex items-center rounded-full border px-2.5 py-1 transition-[filter] duration-200 cursor-pointer " +
         (variant === "astro"
-          ? "border-[#26315f] bg-[#101b3f] text-[#a7e0e7]"
-          : "border-[#c9d2e0] bg-white text-[#2d3085]")
+          ? "border-[#26315f] bg-[#101b3f] text-[#a7e0e7] hover:brightness-110 "
+          : "border-[#c9d2e0] bg-white text-[#2d3085] hover:brightness-95 ")
       }
     >
       {children}

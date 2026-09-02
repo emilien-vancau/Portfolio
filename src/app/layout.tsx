@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./page.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -49,9 +50,9 @@ const fraunces = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Prénom Nom — Développeur & Astronome amateur",
+  title: "Vancauwenberghe Emilien — AI Engineer & Amateur Astronomer",
   description:
-    "Portfolio : ingénierie logicielle d'un côté, observation du ciel profond de l'autre.",
+    "Portfolio of my personal and professional projects, including my CV, contact information, and links to my social media profiles.",
 };
 
 export default function RootLayout({

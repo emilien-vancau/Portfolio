@@ -13,7 +13,7 @@ export default function ProHome() {
   return (
     <div className="theme-pro">
       {/* ---------------------------------------------------------- HERO */}
-      <section className="mx-auto min-h-[calc(40vh-4rem)] flex flex-col gap-9 px-[20rem] pb-20 pt-16 md:pt-24">
+      <section className="gradient-pro-home-page mx-auto min-h-[calc(40vh-4rem)] flex flex-col gap-9 px-[20rem] pb-20 pt-16 md:pt-24">
         <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
           {identity.lastName} {identity.firstName}
         </h1>
