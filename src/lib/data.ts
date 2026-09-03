@@ -201,8 +201,8 @@ export const astroProjects: {
 ];
 
 export const equipment: { name: string; note: string }[] = [
-  { name: "Télescope", note: "Marque / modèle à préciser" },
-  { name: "Monture", note: "Marque / modèle à préciser" },
-  { name: "Caméra / appareil", note: "Marque / modèle à préciser" },
+  { name: "Telescope", note: "Skywatcher / Newton 200/1000 f5" },
+  { name: "Mount", note: "IOptron / Cem60-ec" },
+  { name: "Imager", note: "QHYCCD / QHY294C" },
   { name: "Filtres", note: "À compléter" },
 ];

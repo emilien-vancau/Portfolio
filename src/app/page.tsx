@@ -13,36 +13,43 @@ export default function ProHome() {
   return (
     <div className="theme-pro">
       {/* ---------------------------------------------------------- HERO */}
-      <section className="gradient-denchou mx-auto min-h-[calc(40vh-4rem)] flex flex-col gap-9 px-[20rem] pb-20 pt-16 md:pt-24">
-        <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
-          {identity.lastName} {identity.firstName}
-        </h1>
-        <h2 className="text-xl font-semibold text-[#152451]">
-          {identity.proTitle}
-        </h2>
-        <p className="max-w-xl text-lg leading-relaxed text-[#4a5578]">
-          {identity.proTagline}
-        </p>
-        <div className="flex flex-wrap items-center gap-4 pt-2">
-          <a
-            href="#projets"
-            className="rounded-full bg-[#152451] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#2d3085]"
-          >
-            View my projects
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full border border-[#c9d2e0] bg-white px-6 py-3 text-sm font-medium text-[#152451] transition-colors hover:border-[#2d3085]"
-          >
-            Contact me
-          </a>
-          <Link
-            href="/astro"
-            className="ml-auto text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451]"
-          >
-            ✦ Follow my exploration of the heavens
-          </Link>
+      <section className="gradient-denchou mx-auto min-h-[calc(85vh-4rem)] flex flex-col justify-evenly gap-9 px-[20rem] pb-5 pt-5">
+        <div className="relative z-10 flex flex-col gap-15"> 
+          <div className="flex flex-col gap-2">
+            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
+              {identity.lastName} {identity.firstName}
+            </h1>
+            <h2 className="text-xl font-semibold text-[#152451]">
+              {identity.proTitle}
+            </h2>
+          </div>
+          
+          <p className="max-w-xl text-lg leading-relaxed text-[#4a5578]">
+            {identity.proTagline}
+          </p>
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <a
+              href="#projets"
+              className="rounded-full bg-[#152451] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#2d3085]"
+            >
+              View my projects
+            </a>
+            <a
+              href="#contact"
+              className="rounded-full border border-[#c9d2e0] bg-white px-6 py-3 text-sm font-medium text-[#152451] transition-colors hover:border-[#2d3085]"
+            >
+              Contact me
+            </a>
+            <Link
+              href="/astro"
+              className="ml-auto text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451]"
+            >
+              ✦ Follow my exploration of the heavens
+            </Link>
+          </div>
+
         </div>
+        
       </section>
 
       {/* ------------------------------------------------------- SKILLS */}
