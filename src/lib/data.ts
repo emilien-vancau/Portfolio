@@ -16,7 +16,7 @@ export const identity = {
   proTagline:
     "Transforming data into intelligent solutions. AI & Machine Learning Engineer focused on building reliable, scalable, and impactful AI systems.",
   astroTagline:
-    "Le reste du temps, les yeux tournés vers le ciel — observation, astrophotographie et un peu de bricolage optique.",
+    "Passionate about exploring the wonders of the universe. I enjoy capturing the beauty of deep sky objects and sharing my observations with fellow enthusiasts.",
   location: "Belgique",
   email: "emilien.vancau@gmail.com",
 };
@@ -60,7 +60,7 @@ export const workExperiences: {
     place: "ChWapi",
     period: "07/2022 — 08/2022",
     description:
-      "Adiministrative support at the visits management, including data entry, contacting patients and registering their visits.",
+      "Administrative support at the visits management, including data entry, contacting patients and registering their visits.",
     isDisplay: true,
   },
   {
@@ -68,7 +68,7 @@ export const workExperiences: {
     place: "Technord",
     period: "01/2021 — 05/2021",
     description:
-      "Participation à la construction d'une plateforme interne, montée en compétence sur l'ensemble de la chaîne front/back.",
+      "Contributed to the development of an internal platform to manage production orders between the company and its clients.",
     isDisplay: true,
   }
 ];

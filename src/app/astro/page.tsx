@@ -54,15 +54,32 @@ export default function AstroHome() {
 
       {/* ------------------------------------------------------- ABOUT */}
       <section className="border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
+        <div className="mx-auto mt-10 max-w-6xl">
+          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
+            Handmade Acquisition
+          </h2>
+          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+            All data are acquired through my own equipment. This is one of the most important aspects of the hobby,
+            as the challenge is to get the best possible data 
+          </p>
+        </div>  
+        <div className="mx-auto max-w-6xl flex flex-row justify-end">
+          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
+            Finest processing
+          </h2>
+          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+            
+          </p>
+        </div>  
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
-            About me
+            Gear making
           </h2>
-          <p className="text-lg leading-relaxed text-[#9fb0d6]">
-            I am an amateur astronomer and astrophotographer, passionate about exploring the wonders of the universe. I enjoy capturing the beauty of deep sky objects and sharing my observations with fellow enthusiasts.
-          </p>
-        </div>
+          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
 
+          </p>
+        </div>  
+        
       </section>
 
       {/* ------------------------------------------------- OBSERVATIONS */}
