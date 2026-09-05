@@ -14,7 +14,9 @@
  * identical to the picture at loopPhase = 1 — so looping a rendered video
  * or GIF over phases [0, 1) never shows a seam or a jump.
  *
- * Usage:
+ * Two ways to run it:
+ *
+ * 1) Live, fully dynamic (recomputes every pixel every frame):
  *
  *   import { createFlowGradient } from './flow-gradient.js';
  *
@@ -27,10 +29,24 @@
  *   });
  *   gradient.play();
  *
- * To export a perfectly looping video/GIF instead of animating live, render
- * a fixed number of frames by calling `gradient.draw(i / totalFrames)` for
- * i = 0 .. totalFrames - 1 (do NOT render i = totalFrames, that frame is
- * identical to i = 0 and would create a duplicate/stutter on loop).
+ * 2) Precomputed (cheap): render N frames once, then just flip through
+ *    them forever — no per-pixel math during playback. Recommended if the
+ *    live version uses too much CPU/GPU.
+ *
+ *   import { precomputeFlowGradientFrames, createPrecomputedFlowGradientPlayer } from './flow-gradient.js';
+ *
+ *   const colors = ['#EAF4FC', '#1E50A2', '#F09199', '#895B8A'];
+ *   const options = { scale: 50, distortion: 60, swirl: 10, frameCount: 60 };
+ *
+ *   const frames = await precomputeFlowGradientFrames(200, 200, colors, options);
+ *   const player = createPrecomputedFlowGradientPlayer(canvas, frames, { loopDurationMs: 12000 });
+ *   player.play();
+ *   // later, if you no longer need it: player.destroy();
+ *
+ * To export a perfectly looping video/GIF file instead, render a fixed
+ * number of frames by calling `renderFlowGradientFrame(ctx, w, h, colors, i / totalFrames, options)`
+ * for i = 0 .. totalFrames - 1 (do NOT render i = totalFrames, that frame
+ * is identical to i = 0 and would create a duplicate/stutter on loop).
  */
 
 // ---------------------------------------------------------------------------
@@ -288,10 +304,6 @@ function renderFlowGradientFrame(ctx, width, height, colors, loopPhase, options 
  * @param {HTMLCanvasElement} canvas
  * @param {string[]} colors Hex color stops, e.g. ['#EAF4FC', '#1E50A2', '#F09199'].
  * @param {object} [options] See `renderFlowGradientFrame` for scale/distortion/swirl/stopGaps.
- * @param {number} [options.scale=50]
- * @param {number} [options.distortion=60]
- * @param {number} [options.swirl=10]
- * @param {number[]} [options.stopGaps]
  * @param {number} [options.loopDurationMs=12000] How long one full loop takes.
  */
 function createFlowGradient(canvas, colors, options = {}) {
@@ -328,8 +340,140 @@ function createFlowGradient(canvas, colors, options = {}) {
   return { draw, play, pause };
 }
 
+// ---------------------------------------------------------------------------
+// Precomputed playback (lightweight mode)
+//
+// Because the animation is a perfect loop, we can render a fixed number of
+// frames once, keep them as ready-to-draw bitmaps, and then just flip
+// through them forever. Playback then costs a single `drawImage` call per
+// frame instead of the full per-pixel simulation — this is the cheapest
+// way to keep the effect "running" continuously.
+// ---------------------------------------------------------------------------
+
+/**
+ * Render `frameCount` frames covering one full loop and return them as
+ * ready-to-draw ImageBitmaps.
+ *
+ * Rendering happens on an offscreen canvas at (width x height) — keep this
+ * resolution modest (e.g. 150-300px) since the bitmaps are upscaled for
+ * free when drawn onto a larger on-screen canvas.
+ *
+ * The work is spread across animation frames (a few frames rendered at a
+ * time, then yielding back to the browser) so precomputing dozens of
+ * frames doesn't freeze the page for a noticeable moment.
+ *
+ * @param {number} width  Internal render width in pixels.
+ * @param {number} height Internal render height in pixels.
+ * @param {string[]} colors Hex color stops.
+ * @param {object} [options] Same options as `renderFlowGradientFrame`.
+ * @param {number} [options.frameCount=60] Frames per loop. More = smoother
+ *   motion and a bigger one-time cost/memory footprint; fewer = choppier
+ *   but cheaper. 40-90 is a reasonable range for a slow, soft gradient.
+ * @param {number} [framesPerBatch=4] How many frames to render before
+ *   yielding back to the browser (keeps the page responsive while
+ *   precomputing).
+ * @param {(done: number, total: number) => void} [onProgress] Optional
+ *   progress callback, e.g. to show a loading indicator.
+ * @returns {Promise<ImageBitmap[]>}
+ */
+async function precomputeFlowGradientFrames(
+  width,
+  height,
+  colors,
+  options = {},
+  framesPerBatch = 4,
+  onProgress
+) {
+  const frameCount = options.frameCount || 60;
+
+  const offscreenCanvas = document.createElement('canvas');
+  offscreenCanvas.width = width;
+  offscreenCanvas.height = height;
+  const ctx = offscreenCanvas.getContext('2d');
+
+  const frames = [];
+
+  for (let frameIndex = 0; frameIndex < frameCount; frameIndex++) {
+    const loopPhase = frameIndex / frameCount; // never render phase 1 — it's identical to phase 0
+    renderFlowGradientFrame(ctx, width, height, colors, loopPhase, options);
+
+    const imageData = ctx.getImageData(0, 0, width, height);
+    // ImageBitmap is cheaper to draw later (via drawImage) than raw
+    // ImageData (which requires putImageData and can't be rescaled).
+    const bitmap = await createImageBitmap(imageData);
+    frames.push(bitmap);
+
+    if (onProgress) onProgress(frameIndex + 1, frameCount);
+
+    if ((frameIndex + 1) % framesPerBatch === 0) {
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+  }
+
+  return frames;
+}
+
+/**
+ * Play back a precomputed set of frames on a canvas, looping forever.
+ * Each tick just draws the already-rendered bitmap for the current phase —
+ * no per-pixel computation happens during playback.
+ *
+ * @param {HTMLCanvasElement} canvas Target canvas (can be any size/CSS size;
+ *   frames are scaled to fit automatically).
+ * @param {ImageBitmap[]} frames Output of `precomputeFlowGradientFrames`.
+ * @param {object} [options]
+ * @param {number} [options.loopDurationMs=12000] How long one full loop takes.
+ */
+function createPrecomputedFlowGradientPlayer(canvas, frames, options = {}) {
+  const ctx = canvas.getContext('2d');
+  const loopDurationMs = options.loopDurationMs || 12000;
+  const frameCount = frames.length;
+
+  let animationFrameId = null;
+  let loopStartTimestamp = null;
+  let lastDrawnFrameIndex = -1;
+
+  function drawFrameAtIndex(frameIndex) {
+    if (frameIndex === lastDrawnFrameIndex) return; // skip redundant draws
+    ctx.drawImage(frames[frameIndex], 0, 0, canvas.width, canvas.height);
+    lastDrawnFrameIndex = frameIndex;
+  }
+
+  function handleAnimationFrame(timestampMs) {
+    if (loopStartTimestamp === null) loopStartTimestamp = timestampMs;
+    const elapsedMs = (timestampMs - loopStartTimestamp) % loopDurationMs;
+    const frameIndex = Math.floor((elapsedMs / loopDurationMs) * frameCount) % frameCount;
+    drawFrameAtIndex(frameIndex);
+    animationFrameId = requestAnimationFrame(handleAnimationFrame);
+  }
+
+  function play() {
+    if (animationFrameId !== null) return;
+    loopStartTimestamp = null;
+    animationFrameId = requestAnimationFrame(handleAnimationFrame);
+  }
+
+  function pause() {
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }
+
+  // Free the GPU/CPU memory held by the bitmaps once you're done with them
+  // (e.g. before generating a new set with different colors/options).
+  function destroy() {
+    pause();
+    frames.forEach((bitmap) => bitmap.close());
+  }
+
+  return { play, pause, destroy, drawFrameAtIndex };
+}
+
 export {
   createFlowGradient,
+  precomputeFlowGradientFrames,
+  createPrecomputedFlowGradientPlayer,
   renderFlowGradientFrame,
   hexToRgb,
   hexToOklab,
