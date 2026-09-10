@@ -2,7 +2,7 @@ import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
 import Tag from "@/components/Tag";
 import ProjectCard from "@/components/ProjectCard";
-import FlowGradient from "@/components/FlowGradient";
+import FlowGradientVideo from "@/components/FlowGradientVideo";
 import { identity, skills, workExperiences, proProjects, education } from "@/lib/data";
 
 export default function ProHome() {
@@ -15,7 +15,7 @@ export default function ProHome() {
     <div className="theme-pro">
       {/* ---------------------------------------------------------- HERO */}
       <section className="gradient-denchou mx-auto min-h-[calc(85vh-4rem)] flex flex-col justify-evenly gap-9 px-[20rem] pb-5 pt-5">
-        <FlowGradient />
+        <FlowGradientVideo />
         <div className="relative z-10 flex flex-col gap-15"> 
           <div className="flex flex-col gap-2">
             <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">

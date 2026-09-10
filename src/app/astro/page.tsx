@@ -60,15 +60,21 @@ export default function AstroHome() {
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
             All data are acquired through my own equipment. This is one of the most important aspects of the hobby,
-            as the challenge is to get the best possible data 
+            as the challenge is to get the best possible data to keep the processing and post-processing as simple as possible.<br />
+
+            Ensuring that the equipment is well-maintained and calibrated is ensiential to get the best possible data. This includes regular cleaning of the optics, checking the collimation of the telescope, 
+            and ensuring that the mount is properly aligned and balanced.
+
+            
           </p>
         </div>  
-        <div className="mx-auto max-w-6xl flex flex-row justify-end">
+        <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
             Finest processing
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-            
+            The step where art meet science. I use a combination of software and techniques to bring out the best in the data, while preserving the natural beauty of the objects.
+            The goal is not to paint a canvas by using extravagant colors and effects that erase the original data, but to reveal the hidden details and structures that are present in the data, while keeping a natural look.
           </p>
         </div>  
         <div className="mx-auto max-w-6xl">

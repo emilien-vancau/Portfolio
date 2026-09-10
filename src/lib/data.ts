@@ -187,7 +187,7 @@ export const astroProjects: {
       "Exemple provisoire : série d'observations et de croquis réalisés sur plusieurs semaines pour suivre le passage d'une comète.",
     statusTag: StatusType.Completed,
     tags: ["Observation", "Carnet de terrain"],
-    isDisplay: false,
+    isDisplay: true,
   },
   {
     title: "Ton vrai projet astro",
