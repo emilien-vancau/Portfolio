@@ -23,6 +23,13 @@
   transform: scale(1.06);
 }
 
+.hero-pro-text {
+  color: #ffffff;
+  mix-blend-mode: exclusion;
+  backdrop-filter: grayscale(1) contrast(1.15);
+  -webkit-backdrop-filter: grayscale(1) contrast(1.15); /* Safari */
+}
+
 .gradient-denchou::before {
   content: '';
   position: absolute;

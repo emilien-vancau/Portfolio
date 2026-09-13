@@ -79,6 +79,15 @@ export default function AstroHome() {
         </div>  
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
+            Make the data tell a story
+          </h2>
+          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+            
+          </p>
+        </div>
+        
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
             Gear making
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
