@@ -33,17 +33,17 @@ const gradientsDirectory = path.dirname(fileURLToPath(import.meta.url));
 // ---------------------------------------------------------------------------
 
 const CONFIG = {
-  colors: ["#C9D2E0", "#9FB0D6", "#5d6ba8", "#293d80", "#C9D2E0"],
+  colors: ["#C9D2E0", "#C9D2E0", "#435494", "#C9D2E0"],
   scale: 0,
   distortion: 42,
   swirl: 50,
 
-  width: 360, // render resolution — the video is upscaled for free by the
-  height: 280, // <video> element's CSS size, so this doesn't need to match
+  width: 720, // render resolution — the video is upscaled for free by the
+  height: 360, // <video> element's CSS size, so this doesn't need to match
   //             the on-screen display size.
 
-  frameCount: 600, // frames per loop — more = smoother motion, bigger file
-  fps: 30, // playback framerate; loopDuration = frameCount / fps seconds (here: 3s)
+  frameCount: 900, // frames per loop — more = smoother motion, bigger file
+  fps: 40, // playback framerate; loopDuration = frameCount / fps seconds (here: 3s)
 
   outputPath: path.resolve(gradientsDirectory, '../../public/gradients/flow-gradient-loop.mp4'),
 };

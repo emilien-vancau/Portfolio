@@ -18,15 +18,15 @@ export default function ProHome() {
         <FlowGradientVideo />
         <div className="flex flex-col gap-15"> 
           <div className="flex flex-col gap-2">
-            <h1 className="hero-pro-text max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
               {identity.lastName} {identity.firstName}
             </h1>
-            <h2 className="hero-pro-text text-xl font-semibold text-[#152451]">
+            <h2 className="text-xl font-semibold text-[#152451]">
               {identity.proTitle}
             </h2>
           </div>
           
-          <p className="hero-pro-text max-w-xl text-lg leading-relaxed text-[#4a5578]">
+          <p className="max-w-xl text-lg leading-relaxed text-[#364165]">
             {identity.proTagline}
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -44,7 +44,7 @@ export default function ProHome() {
             </a>
             <Link
               href="/astro"
-              className="hero-pro-text ml-auto text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451]"
+              className="ml-auto text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451]"
             >
               ✦ Follow my exploration of the heavens
             </Link>
