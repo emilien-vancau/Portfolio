@@ -2,6 +2,7 @@ import Link from "next/link";
 import Eyebrow from "@/components/Eyebrow";
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
+import AuroraGradient from "@/components/AuroraGradientVideo";
 import { identity, astroProjects, equipment } from "@/lib/data";
 
 export default function AstroHome() {
@@ -11,12 +12,13 @@ export default function AstroHome() {
     <div className="theme-astro bg-[#0a1230]">
       {/* ---------------------------------------------------------- HERO */}
       <section className="relative mx-auto flex min-h-[calc(80vh-4rem)] flex-col justify-evenly overflow-hidden pb-24 pt-10 md:pt-15">
-        <StarField count={130} />
+        <AuroraGradient opacity={0.7} />
+        <StarField count={130} className="z-10" />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(ellipse_at_top,_rgba(45,48,133,0.35),_transparent_60%)]"
         />
-        <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6">
           <h1
             className="max-w-3xl text-4xl italic tracking-wide leading-[1.15] tracking-tight text-[#e5ebeb] md:text-6xl"
             style={{ fontFamily: "var(--font-display-astro)" }}>
@@ -82,6 +84,8 @@ export default function AstroHome() {
             Data storytelling
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+            Aside the artistic aspect of astrophotography, exploiting the observation to its fullest is also a way to learn more about the observed object and the universe in general.
+            To do so, I'm making a bit of processing/cleaning on the pictures before analyzing and extracting the information. With clean data in hand, it's possible to known more about what is observed 
             
           </p>
         </div>

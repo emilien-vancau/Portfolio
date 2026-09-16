@@ -163,13 +163,13 @@ export const astroProjects: {
   isDisplay: boolean;
 }[] = [
   {
-    title: "Nébuleuse d'Orion — M42",
-    period: "Hiver 2024",
+    title: "Galaxies classifier",
+    period: "",
     description:
-      "Exemple provisoire : session d'astrophotographie longue pose sur la nébuleuse d'Orion, empilement de plusieurs dizaines de clichés.",
-    statusTag: StatusType.Completed,
-    tags: ["Astrophoto", "Ciel profond"],
-    isDisplay: false,
+      "Acquisition and processing of amateur astronomers' images of galaxies, to create a dataset for training AI models for the galaxies classification project.",
+    tags: ["Deep Learning", "Dataset", "Galaxies", "Deep Sky", "Pixinsight"],
+    statusTag: StatusType.Active,
+    isDisplay: true,
   },
   {
     title: "Construction d'un Dobson 200mm",
@@ -201,8 +201,8 @@ export const astroProjects: {
 ];
 
 export const equipment: { name: string; note: string }[] = [
-  { name: "Telescope", note: "Skywatcher / Newton 200/1000 f5" },
-  { name: "Mount", note: "IOptron / Cem60-ec" },
-  { name: "Imager", note: "QHYCCD / QHY294C" },
-  { name: "Filtres", note: "À compléter" },
+  { name: "Telescope", note: "Skywatcher - Newton 200/1000 f5" },
+  { name: "Mount", note: "IOptron - Cem60-ec" },
+  { name: "Imager", note: "QHYCCD - QHY294C" },
+  { name: "Filters", note: "Optolong - L-extreme / L-pro" },
 ];
