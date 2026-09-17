@@ -63,16 +63,25 @@ const CONFIG = {
   starCount: 60,
   seed: 0,
 
-  width: 720, // même résolution par défaut que le flow gradient — upscalée
-  height: 360, // gratuitement par la taille CSS du <video>.
+  // VITESSE du mouvement, en millisecondes pour un tour complet de dérive —
+  // totalement indépendante de `frameCount`/`fps` ci-dessous. Diminuer cette
+  // valeur = mouvement plus rapide, quels que soient la durée du fichier
+  // exporté ou son frame rate. En interne, le script calcule combien de
+  // tours entiers (`loopCycles`) tiennent dans la durée totale de la vidéo
+  // (frameCount / fps) pour se rapprocher le plus possible de cette vitesse
+  // tout en gardant un bouclage parfait (voir le log au lancement).
+  loopDurationMs: 120000,
 
-  frameCount: 900, // frames per loop
-  fps: 40, // playback framerate; loopDuration = frameCount / fps seconds (here: 3s)
+  width: 1920, // plus net qu'avant (720x360) sans exploser le temps de rendu
+  height: 1080, // grâce à l'optimisation par colonne/ligne ci-dessous (~6-7 min pour 900 frames).
+
+  frameCount: 1200, // frames per loop — contrôle la fluidité et la durée du fichier, PAS la vitesse du motif
+  fps: 40, // playback framerate; durée du fichier = frameCount / fps secondes (ici : 22.5s)
 
   // Couleur de fond utilisée UNIQUEMENT pour aplatir la vidéo de repli
   // (celle qui perd la transparence) — idéalement la couleur de fond
   // réelle du Hero, pour que le repli reste invisible.
-  fallbackBackground: '#05070f',
+  fallbackBackground: '#0d122500',
 
   outputPathAlpha: path.resolve(gradientsDirectory, '../../public/gradients/aurora-gradient-loop.webm'),
   outputPathFallback: path.resolve(gradientsDirectory, '../../public/gradients/aurora-gradient-loop.mp4'),
@@ -138,6 +147,11 @@ function clamp01(value) {
   return Math.min(1, Math.max(0, value));
 }
 
+function smoothstep(edge0, edge1, value) {
+  const t = clamp01((value - edge0) / (edge1 - edge0));
+  return t * t * (3 - 2 * t);
+}
+
 const AURORA_DEFAULT_COLORS = ['#EAFFF4', '#4BE8A0', '#2E6E80', '#16224D'];
 
 function resolveAuroraColors(colors) {
@@ -186,13 +200,18 @@ function fbm2(x, y, octaves = 4) {
   return value;
 }
 
-function loopOffset(loopPhase, radius) {
-  const angle = loopPhase * Math.PI * 2;
+function loopOffset(loopPhase, radius, cycles = 1) {
+  const angle = loopPhase * cycles * Math.PI * 2;
   return [Math.cos(angle) * radius, Math.sin(angle) * radius];
 }
 
 // ---------------------------------------------------------------------------
 // Core renderer — writes straight into a raw RGBA buffer (no canvas needed)
+//
+// Identique à aurora-gradient-video.js (même correctifs de netteté : rayons
+// filamenteux haute fréquence + bord bas resserré, mêmes calculs mis en
+// cache par colonne/ligne selon `direction` pour rester rapide à haute
+// résolution) et même paramètre `loopCycles` pour la vitesse indépendante.
 // ---------------------------------------------------------------------------
 
 function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, options = {}) {
@@ -208,6 +227,7 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
     stars = false,
     starCount = 60,
     seed = 0,
+    loopCycles = 1,
   } = options;
 
   const [rimHex, glowHex, horizonHex, deepHex] = resolveAuroraColors(colors);
@@ -223,87 +243,143 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
   const groundGlowAmount = groundGlow / 100;
   const ambientAmount = ambient / 100;
 
-  const angle = (direction % 4) * (Math.PI / 2);
-  const cosA = Math.cos(angle);
-  const sinA = Math.sin(angle);
+  const directionIsQuarterTurn = direction % 2 === 1;
+  const staticAxisSize = directionIsQuarterTurn ? height : width;
+  const varyingAxisSize = directionIsQuarterTurn ? width : height;
+
+  const sxLookup = new Float32Array(staticAxisSize);
+  for (let idx = 0; idx < staticAxisSize; idx++) {
+    const t = (idx + 0.5) / staticAxisSize;
+    sxLookup[idx] = direction === 0 || direction === 3 ? t : 1 - t;
+  }
+
+  const syLookup = new Float32Array(varyingAxisSize);
+  for (let idx = 0; idx < varyingAxisSize; idx++) {
+    const t = (idx + 0.5) / varyingAxisSize;
+    syLookup[idx] = direction === 0 || direction === 1 ? t : 1 - t;
+  }
 
   const bands = [];
   for (let k = 0; k < bandCount; k++) {
-    const [loopX, loopY] = loopOffset(loopPhase, driftAmount * 6 + k * 1.7);
-    bands.push({
+    const [loopX, loopY] = loopOffset(loopPhase, driftAmount * 6 + k * 1.7, loopCycles);
+    const band = {
       centerY: 0.14 + (k / Math.max(1, bandCount - 1)) * 0.34 + seed * 0.001,
       freqMul: freq * (1 + k * 0.18),
       loopX,
       loopY,
       phase: k * 12.9,
-    });
+      foldAmount,
+      spineY: new Float32Array(staticAxisSize),
+      thickness: new Float32Array(staticAxisSize),
+      filament: new Float32Array(staticAxisSize),
+    };
+
+    for (let idx = 0; idx < staticAxisSize; idx++) {
+      const sx = sxLookup[idx];
+      const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
+      band.spineY[idx] = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
+      band.thickness[idx] =
+        0.045 + foldAmount * 0.08 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.025;
+
+      const filamentNoise = fbm2(
+        sx * band.freqMul * 20 + band.loopX * 2.2,
+        band.phase * 3.1 + band.loopY * 1.3,
+        3
+      );
+      band.filament[idx] = smoothstep(0.4, 0.6, filamentNoise);
+    }
+
+    bands.push(band);
   }
 
   const buffer = Buffer.allocUnsafe(width * height * 4); // RGBA — alpha is kept, unlike the flow gradient's RGB24
 
-  for (let pixelY = 0; pixelY < height; pixelY++) {
-    const normalizedY = (pixelY + 0.5) / height;
+  if (!directionIsQuarterTurn) {
+    for (let pixelY = 0; pixelY < height; pixelY++) {
+      const normalizedY = (pixelY + 0.5) / height;
+      const sy = syLookup[pixelY];
 
-    for (let pixelX = 0; pixelX < width; pixelX++) {
-      const normalizedX = (pixelX + 0.5) / width;
-
-      const sx = (normalizedX - 0.5) * cosA - (normalizedY - 0.5) * sinA + 0.5;
-      const sy = (normalizedX - 0.5) * sinA + (normalizedY - 0.5) * cosA + 0.5;
-
-      let r = deepRgb[0] * ambientAmount;
-      let g = deepRgb[1] * ambientAmount;
-      let b = deepRgb[2] * ambientAmount;
-      let a = ambientAmount;
-
-      for (const band of bands) {
-        const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
-        const spineY = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
-        const thickness =
-          0.05 + foldAmount * 0.09 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.03;
-        const d = (sy - spineY) / Math.max(0.001, thickness);
-        if (d < -1.4 || d > 3.2) continue;
-
-        const spread = d < 0 ? 0.32 : 0.75 + foldAmount * 0.4;
-        const shape = Math.exp(-(d * d) / (2 * spread * spread));
-
-        const shimmer =
-          0.65 + 0.35 * fbm2(sx * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
-        const w = shape * shimmer;
-        if (w <= 0.002) continue;
-
-        const edge = clamp01(1 - Math.abs(d) * 1.4);
-        const blended = mixOklab(glowOklab, rimOklab, edge);
-        const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
-
-        r += cr * w;
-        g += cg * w;
-        b += cb * w;
-        a += w;
+      for (let pixelX = 0; pixelX < width; pixelX++) {
+        writeAuroraPixel(
+          buffer, (pixelY * width + pixelX) * 4, bands, pixelX, sy, sxLookup[pixelX],
+          normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+          glowOklab, rimOklab, globalIntensity
+        );
       }
+    }
+  } else {
+    for (let pixelY = 0; pixelY < height; pixelY++) {
+      const staticIdx = pixelY;
+      const sxForShimmer = sxLookup[staticIdx];
+      const normalizedY = (pixelY + 0.5) / height;
 
-      if (groundGlowAmount > 0) {
-        const groundT = Math.max(0, (normalizedY - 0.72) / 0.28);
-        if (groundT > 0) {
-          const gw = groundT * groundT * groundGlowAmount * 0.5;
-          r += horizonRgb[0] * gw;
-          g += horizonRgb[1] * gw;
-          b += horizonRgb[2] * gw;
-          a += gw;
-        }
+      for (let pixelX = 0; pixelX < width; pixelX++) {
+        writeAuroraPixel(
+          buffer, (pixelY * width + pixelX) * 4, bands, staticIdx, syLookup[pixelX], sxForShimmer,
+          normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+          glowOklab, rimOklab, globalIntensity
+        );
       }
-
-      a = Math.min(1, a) * globalIntensity;
-      const pixelIndex = (pixelY * width + pixelX) * 4;
-      buffer[pixelIndex] = Math.min(255, r);
-      buffer[pixelIndex + 1] = Math.min(255, g);
-      buffer[pixelIndex + 2] = Math.min(255, b);
-      buffer[pixelIndex + 3] = Math.round(a * 255);
     }
   }
 
   if (stars) paintStars(buffer, width, height, loopPhase, starCount, seed, globalIntensity);
 
   return buffer;
+}
+
+/** Calcule et écrit un pixel RGBA — identique à writeAuroraPixel dans aurora-gradient-video.js. */
+function writeAuroraPixel(
+  buffer, pixelIndex, bands, staticIdx, sy, sxForShimmer,
+  normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+  glowOklab, rimOklab, globalIntensity
+) {
+  let r = deepRgb[0] * ambientAmount;
+  let g = deepRgb[1] * ambientAmount;
+  let b = deepRgb[2] * ambientAmount;
+  let a = ambientAmount;
+
+  for (const band of bands) {
+    const spineY = band.spineY[staticIdx];
+    const thickness = band.thickness[staticIdx];
+    const d = (sy - spineY) / Math.max(0.001, thickness);
+    if (d < -1.4 || d > 3.2) continue;
+
+    const spread = d < 0 ? 0.22 : 0.62 + band.foldAmount * 0.32;
+    const shape = Math.exp(-(d * d) / (2 * spread * spread));
+
+    const shimmer =
+      0.6 + 0.4 * fbm2(sxForShimmer * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
+    const filamentFactor = 0.5 + 0.7 * band.filament[staticIdx];
+    const w = shape * shimmer * filamentFactor;
+    if (w <= 0.002) continue;
+
+    const edge = clamp01(1 - Math.abs(d) * 1.8);
+    const blended = mixOklab(glowOklab, rimOklab, edge);
+    const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
+
+    r += cr * w;
+    g += cg * w;
+    b += cb * w;
+    a += w;
+  }
+
+  if (groundGlowAmount > 0) {
+    const groundT = Math.max(0, (normalizedY - 0.72) / 0.28);
+    if (groundT > 0) {
+      const gw = groundT * groundT * groundGlowAmount * 0.5;
+      r += horizonRgb[0] * gw;
+      g += horizonRgb[1] * gw;
+      b += horizonRgb[2] * gw;
+      a += gw;
+    }
+  }
+
+  a = Math.min(1, a) * globalIntensity;
+  buffer[pixelIndex] = Math.min(255, r);
+  buffer[pixelIndex + 1] = Math.min(255, g);
+  buffer[pixelIndex + 2] = Math.min(255, b);
+  buffer[pixelIndex + 3] = Math.round(a * 255);
 }
 
 function paintStars(buffer, width, height, loopPhase, count, seed, globalIntensity) {
@@ -390,7 +466,7 @@ function spawnAlphaWebmEncoder(width, height, fps, frameCount, outputPath) {
     '-pix_fmt', 'yuva420p', // keeps the alpha channel through encoding
     '-auto-alt-ref', '0', // required by libvpx-vp9 when encoding alpha
     '-b:v', '0',
-    '-crf', '32',
+    '-crf', '24', // plus bas que la valeur initiale (32) : sensiblement plus net, fichier un peu plus lourd
     '-metadata:s:v:0', 'alpha_mode="1"', // signal alpha explicitly in the WebM/Matroska container
     outputPath,
   ]);
@@ -430,6 +506,19 @@ function waitForClose(ffmpeg, label) {
   });
 }
 
+/**
+ * Combien de tours complets de la boucle de dérive tiennent dans la durée
+ * totale de la vidéo exportée, pour que la vitesse VISIBLE se rapproche le
+ * plus possible de `loopDurationMs` — tout en restant un entier (>= 1),
+ * seule façon de garantir un bouclage parfait sur `<video loop>`.
+ */
+function resolveLoopCycles(frameCount, fps, loopDurationMs) {
+  const totalVideoDurationMs = (frameCount / fps) * 1000;
+  const cycles = Math.max(1, Math.round(totalVideoDurationMs / loopDurationMs));
+  const effectiveLoopDurationMs = totalVideoDurationMs / cycles;
+  return { cycles, totalVideoDurationMs, effectiveLoopDurationMs };
+}
+
 async function renderAuroraGradientVideo(config) {
   const {
     width,
@@ -437,10 +526,23 @@ async function renderAuroraGradientVideo(config) {
     colors,
     frameCount,
     fps,
+    loopDurationMs,
     outputPathAlpha,
     outputPathFallback,
     fallbackBackground,
   } = config;
+
+  const { cycles, totalVideoDurationMs, effectiveLoopDurationMs } = resolveLoopCycles(
+    frameCount,
+    fps,
+    loopDurationMs
+  );
+  console.log(
+    `Clip: ${(totalVideoDurationMs / 1000).toFixed(1)}s total, ${cycles} tour(s) de dérive, ` +
+      `soit une vitesse réelle de ${effectiveLoopDurationMs.toFixed(0)}ms/tour ` +
+      `(demandé : ${loopDurationMs}ms/tour — l'écart vient de l'arrondi nécessaire au bouclage parfait).`
+  );
+  const renderOptions = { ...config, loopCycles: cycles };
 
   for (const outputPath of [outputPathAlpha, outputPathFallback]) {
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
@@ -456,7 +558,7 @@ async function renderAuroraGradientVideo(config) {
 
   for (let frameIndex = 0; frameIndex < frameCount; frameIndex++) {
     const loopPhase = frameIndex / frameCount; // never render phase 1 — identical to phase 0
-    const rgbaBuffer = renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, config);
+    const rgbaBuffer = renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, renderOptions);
     const flattenedBuffer = compositeOverBackground(rgbaBuffer, width, height, fallbackBackground);
 
     await Promise.all([

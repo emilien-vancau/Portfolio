@@ -173,10 +173,23 @@ function fbm2(x, y, octaves = 4) {
   return value;
 }
 
-/** Point qui parcourt un cercle de rayon `radius` en fonction de loopPhase — garantit le bouclage. */
-function loopOffset(loopPhase, radius) {
-  const angle = loopPhase * Math.PI * 2;
+/**
+ * Point qui parcourt un cercle de rayon `radius` en fonction de loopPhase —
+ * garantit le bouclage. `cycles` (entier >= 1) fait parcourir le cercle
+ * plusieurs fois sur la durée totale du clip : c'est ce qui permet de régler
+ * la VITESSE du mouvement indépendamment du nombre de frames et du frame
+ * rate (voir `loopCycles` dans les options, et `loopDurationMs` dans
+ * render-aurora-gradient-video.mjs). Comme cos/sin restent périodiques pour
+ * n'importe quel entier de cycles, le bouclage reste parfait.
+ */
+function loopOffset(loopPhase, radius, cycles = 1) {
+  const angle = loopPhase * cycles * Math.PI * 2;
   return [Math.cos(angle) * radius, Math.sin(angle) * radius];
+}
+
+function smoothstep(edge0, edge1, value) {
+  const t = clamp01((value - edge0) / (edge1 - edge0));
+  return t * t * (3 - 2 * t);
 }
 
 // ---------------------------------------------------------------------------
@@ -205,6 +218,10 @@ function loopOffset(loopPhase, radius) {
  * @param {boolean} [options.stars=false]   semis d'étoiles scintillantes (désactivé par défaut).
  * @param {number} [options.starCount=60]
  * @param {number} [options.seed=0]
+ * @param {number} [options.loopCycles=1]   nombre de tours de boucle sur la durée du clip —
+ *   c'est ce paramètre (calculé automatiquement par render-aurora-gradient-video.mjs à partir
+ *   de `loopDurationMs`) qui règle la VITESSE indépendamment du nombre de frames et du fps.
+ *   Doit rester un entier >= 1 pour que le bouclage reste parfait.
  */
 function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, options = {}) {
   const {
@@ -219,6 +236,7 @@ function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, option
     stars = false,
     starCount = 60,
     seed = 0,
+    loopCycles = 1,
   } = options;
 
   const [rimHex, glowHex, horizonHex, deepHex] = resolveAuroraColors(colors);
@@ -234,89 +252,161 @@ function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, option
   const groundGlowAmount = groundGlow / 100;
   const ambientAmount = ambient / 100;
 
-  const angle = (direction % 4) * (Math.PI / 2);
-  const cosA = Math.cos(angle);
-  const sinA = Math.sin(angle);
+  // direction est un quart de tour (0/90/180/270°) : dans les 4 cas, la
+  // position le long du rideau ("sx") ne dépend jamais que d'UNE seule des
+  // deux coordonnées écran — nx pour 0°/180°, ny pour 90°/270°. On en profite
+  // pour ne calculer la silhouette de chaque rideau (spine/épaisseur/rayons)
+  // qu'une fois par colonne (ou par ligne selon l'orientation), au lieu de
+  // le refaire pour chaque pixel : c'est ce qui rend une résolution plus
+  // élevée jouable en temps de génération.
+  const directionIsQuarterTurn = direction % 2 === 1;
+  const staticAxisSize = directionIsQuarterTurn ? height : width; // axe qui porte spine/épaisseur/rayons
+  const varyingAxisSize = directionIsQuarterTurn ? width : height; // axe qui porte "sy" (position dans le rideau)
+
+  const sxLookup = new Float32Array(staticAxisSize);
+  for (let idx = 0; idx < staticAxisSize; idx++) {
+    const t = (idx + 0.5) / staticAxisSize;
+    sxLookup[idx] = direction === 0 || direction === 3 ? t : 1 - t;
+  }
+
+  const syLookup = new Float32Array(varyingAxisSize);
+  for (let idx = 0; idx < varyingAxisSize; idx++) {
+    const t = (idx + 0.5) / varyingAxisSize;
+    syLookup[idx] = direction === 0 || direction === 1 ? t : 1 - t;
+  }
 
   const bands = [];
   for (let k = 0; k < bandCount; k++) {
-    const [loopX, loopY] = loopOffset(loopPhase, driftAmount * 6 + k * 1.7);
-    bands.push({
+    const [loopX, loopY] = loopOffset(loopPhase, driftAmount * 6 + k * 1.7, loopCycles);
+    const band = {
       centerY: 0.14 + (k / Math.max(1, bandCount - 1)) * 0.34 + seed * 0.001,
       freqMul: freq * (1 + k * 0.18),
       loopX,
       loopY,
       phase: k * 12.9,
-    });
+      foldAmount,
+      spineY: new Float32Array(staticAxisSize),
+      thickness: new Float32Array(staticAxisSize),
+      filament: new Float32Array(staticAxisSize),
+    };
+
+    for (let idx = 0; idx < staticAxisSize; idx++) {
+      const sx = sxLookup[idx];
+      const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
+      band.spineY[idx] = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
+      band.thickness[idx] =
+        0.045 + foldAmount * 0.08 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.025;
+
+      // rayons/filaments fins : bruit à haute fréquence + contraste resserré
+      // (smoothstep sur une fenêtre étroite) pour des stries nettes plutôt
+      // qu'un dégradé flou — c'est le principal correctif de netteté.
+      const filamentNoise = fbm2(
+        sx * band.freqMul * 20 + band.loopX * 2.2,
+        band.phase * 3.1 + band.loopY * 1.3,
+        3
+      );
+      band.filament[idx] = smoothstep(0.4, 0.6, filamentNoise);
+    }
+
+    bands.push(band);
   }
 
   const imageData = ctx.createImageData(width, height);
   const pixels = imageData.data;
 
-  for (let pixelY = 0; pixelY < height; pixelY++) {
-    const normalizedY = (pixelY + 0.5) / height;
+  // Boucle en deux variantes selon l'orientation, pour que l'index "statique"
+  // (spine/épaisseur/rayons, constant sur tout un côté) soit bien calculé une
+  // seule fois par ligne ou par colonne plutôt que par pixel.
+  if (!directionIsQuarterTurn) {
+    for (let pixelY = 0; pixelY < height; pixelY++) {
+      const normalizedY = (pixelY + 0.5) / height;
+      const sy = syLookup[pixelY];
 
-    for (let pixelX = 0; pixelX < width; pixelX++) {
-      const normalizedX = (pixelX + 0.5) / width;
-
-      const sx = (normalizedX - 0.5) * cosA - (normalizedY - 0.5) * sinA + 0.5;
-      const sy = (normalizedX - 0.5) * sinA + (normalizedY - 0.5) * cosA + 0.5;
-
-      let r = deepRgb[0] * ambientAmount;
-      let g = deepRgb[1] * ambientAmount;
-      let b = deepRgb[2] * ambientAmount;
-      let a = ambientAmount;
-
-      for (const band of bands) {
-        const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
-        const spineY = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
-        const thickness =
-          0.05 + foldAmount * 0.09 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.03;
-        const d = (sy - spineY) / Math.max(0.001, thickness);
-        if (d < -1.4 || d > 3.2) continue;
-
-        // bord bas net, dégradé vers le haut — silhouette typique d'un rideau d'aurore
-        const spread = d < 0 ? 0.32 : 0.75 + foldAmount * 0.4;
-        const shape = Math.exp(-(d * d) / (2 * spread * spread));
-
-        const shimmer =
-          0.65 + 0.35 * fbm2(sx * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
-        const w = shape * shimmer;
-        if (w <= 0.002) continue;
-
-        const edge = clamp01(1 - Math.abs(d) * 1.4);
-        const blended = mixOklab(glowOklab, rimOklab, edge);
-        const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
-
-        r += cr * w;
-        g += cg * w;
-        b += cb * w;
-        a += w;
+      for (let pixelX = 0; pixelX < width; pixelX++) {
+        const staticIdx = pixelX;
+        const sxForShimmer = sxLookup[staticIdx];
+        writeAuroraPixel(
+          pixels, (pixelY * width + pixelX) * 4, bands, staticIdx, sy, sxForShimmer,
+          normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+          glowOklab, rimOklab, globalIntensity
+        );
       }
+    }
+  } else {
+    for (let pixelY = 0; pixelY < height; pixelY++) {
+      const staticIdx = pixelY;
+      const sxForShimmer = sxLookup[staticIdx];
 
-      if (groundGlowAmount > 0) {
-        const groundT = Math.max(0, (normalizedY - 0.72) / 0.28);
-        if (groundT > 0) {
-          const gw = groundT * groundT * groundGlowAmount * 0.5;
-          r += horizonRgb[0] * gw;
-          g += horizonRgb[1] * gw;
-          b += horizonRgb[2] * gw;
-          a += gw;
-        }
+      for (let pixelX = 0; pixelX < width; pixelX++) {
+        const normalizedY = (pixelY + 0.5) / height; // "bas de cadre" reste l'axe écran réel, pas l'axe tourné
+        const sy = syLookup[pixelX];
+        writeAuroraPixel(
+          pixels, (pixelY * width + pixelX) * 4, bands, staticIdx, sy, sxForShimmer,
+          normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+          glowOklab, rimOklab, globalIntensity
+        );
       }
-
-      a = Math.min(1, a) * globalIntensity;
-      const pixelIndex = (pixelY * width + pixelX) * 4;
-      pixels[pixelIndex] = Math.min(255, r);
-      pixels[pixelIndex + 1] = Math.min(255, g);
-      pixels[pixelIndex + 2] = Math.min(255, b);
-      pixels[pixelIndex + 3] = Math.round(a * 255);
     }
   }
 
   if (stars) paintStars(pixels, width, height, loopPhase, starCount, seed, globalIntensity);
 
   ctx.putImageData(imageData, 0, 0);
+}
+
+/** Calcule et écrit un pixel RGBA — factorisé pour rester identique entre les deux orientations. */
+function writeAuroraPixel(
+  pixels, pixelIndex, bands, staticIdx, sy, sxForShimmer,
+  normalizedY, deepRgb, ambientAmount, groundGlowAmount, horizonRgb,
+  glowOklab, rimOklab, globalIntensity
+) {
+  let r = deepRgb[0] * ambientAmount;
+  let g = deepRgb[1] * ambientAmount;
+  let b = deepRgb[2] * ambientAmount;
+  let a = ambientAmount;
+
+  for (const band of bands) {
+    const spineY = band.spineY[staticIdx];
+    const thickness = band.thickness[staticIdx];
+    const d = (sy - spineY) / Math.max(0.001, thickness);
+    if (d < -1.4 || d > 3.2) continue;
+
+    // bord bas net, dégradé vers le haut — silhouette typique d'un rideau d'aurore
+    const spread = d < 0 ? 0.22 : 0.62 + band.foldAmount * 0.32;
+    const shape = Math.exp(-(d * d) / (2 * spread * spread));
+
+    const shimmer =
+      0.6 + 0.4 * fbm2(sxForShimmer * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
+    const filamentFactor = 0.5 + 0.7 * band.filament[staticIdx];
+    const w = shape * shimmer * filamentFactor;
+    if (w <= 0.002) continue;
+
+    const edge = clamp01(1 - Math.abs(d) * 1.8);
+    const blended = mixOklab(glowOklab, rimOklab, edge);
+    const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
+
+    r += cr * w;
+    g += cg * w;
+    b += cb * w;
+    a += w;
+  }
+
+  if (groundGlowAmount > 0) {
+    const groundT = Math.max(0, (normalizedY - 0.72) / 0.28);
+    if (groundT > 0) {
+      const gw = groundT * groundT * groundGlowAmount * 0.5;
+      r += horizonRgb[0] * gw;
+      g += horizonRgb[1] * gw;
+      b += horizonRgb[2] * gw;
+      a += gw;
+    }
+  }
+
+  a = Math.min(1, a) * globalIntensity;
+  pixels[pixelIndex] = Math.min(255, r);
+  pixels[pixelIndex + 1] = Math.min(255, g);
+  pixels[pixelIndex + 2] = Math.min(255, b);
+  pixels[pixelIndex + 3] = Math.round(a * 255);
 }
 
 /** Semis d'étoiles scintillantes optionnel (désactivé par défaut : la page a déjà un StarField). */
