@@ -8,6 +8,7 @@
 // ============================================================
 
 import { StatusType } from "@/components/StatusTag";
+import type { ComparisonImage } from "@/components/MultiImageComparison";
 
 export const identity = {
   firstName: "Emilien",
@@ -205,4 +206,31 @@ export const equipment: { name: string; note: string }[] = [
   { name: "Mount", note: "IOptron - Cem60-ec" },
   { name: "Imager", note: "QHYCCD - QHY294C" },
   { name: "Filters", note: "Optolong - L-extreme / L-pro" },
+];
+
+export const astroComparisonImages: ComparisonImage[] = [
+  {
+    src: "/imgs/img1.jpg",
+    alt: "Première version",
+    label: "Version 1",
+    textPosition: "top",
+  },
+  {
+    src: "/imgs/img2.jpg",
+    alt: "Deuxième version",
+    label: "Version 2",
+    textPosition: "bottom",
+  },
+  {
+    src: "/imgs/img3.jpg",
+    alt: "Troisième version",
+    label: "Version 3",
+    textPosition: "top",
+  },
+  {
+    src: "/imgs/img4.jpg",
+    alt: "Version finale",
+    label: "Version finale",
+    textPosition: "bottom",
+  },
 ];

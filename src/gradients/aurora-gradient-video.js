@@ -173,6 +173,27 @@ function fbm2(x, y, octaves = 4) {
   return value;
 }
 
+function ridgeNoise2D(x, y) {
+  return 1 - Math.abs(valueNoise2D(x, y) * 2 - 1);
+}
+
+/** Bruit "en crête" : transitions nettes plutôt que des bosses arrondies — mieux adapté à des filaments/rayons qu'un fbm classique. */
+function ridgedFbm2(x, y, octaves = 3) {
+  let value = 0;
+  let amp = 0.5;
+  let cx = x;
+  let cy = y;
+  for (let i = 0; i < octaves; i++) {
+    value += amp * ridgeNoise2D(cx, cy);
+    const rx = cx * NOISE_ROTATION_COS - cy * NOISE_ROTATION_SIN;
+    const ry = cx * NOISE_ROTATION_SIN + cy * NOISE_ROTATION_COS;
+    cx = rx * 2 + 100;
+    cy = ry * 2 + 100;
+    amp *= 0.55;
+  }
+  return value;
+}
+
 /**
  * Point qui parcourt un cercle de rayon `radius` en fonction de loopPhase —
  * garantit le bouclage. `cycles` (entier >= 1) fait parcourir le cercle
@@ -222,6 +243,13 @@ function smoothstep(edge0, edge1, value) {
  *   c'est ce paramètre (calculé automatiquement par render-aurora-gradient-video.mjs à partir
  *   de `loopDurationMs`) qui règle la VITESSE indépendamment du nombre de frames et du fps.
  *   Doit rester un entier >= 1 pour que le bouclage reste parfait.
+ * @param {number} [options.position=30]    0-100, où se centre le rideau le long de l'axe
+ *   perpendiculaire (0 = collé au bord de départ, 100 = collé au bord opposé). Combiné à
+ *   `direction`, ça permet de décaler l'aurore dans n'importe quelle direction plutôt que
+ *   de la laisser figée sur un bord.
+ * @param {number} [options.variation=60]   0-100, à quel point l'intensité/la hauteur de
+ *   chaque rideau varie d'un endroit à l'autre (0 = uniforme sur toute la largeur, 100 =
+ *   zones franchement marquées et zones presque invisibles) — l'effet "par endroits" .
  */
 function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, options = {}) {
   const {
@@ -237,6 +265,8 @@ function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, option
     starCount = 60,
     seed = 0,
     loopCycles = 1,
+    position = 30,
+    variation = 60,
   } = options;
 
   const [rimHex, glowHex, horizonHex, deepHex] = resolveAuroraColors(colors);
@@ -275,11 +305,16 @@ function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, option
     syLookup[idx] = direction === 0 || direction === 1 ? t : 1 - t;
   }
 
+  const positionCenter = position / 100;
+  const bandSpread = 0.3;
+  const variationAmount = variation / 100;
+
   const bands = [];
   for (let k = 0; k < bandCount; k++) {
     const [loopX, loopY] = loopOffset(loopPhase, driftAmount * 6 + k * 1.7, loopCycles);
     const band = {
-      centerY: 0.14 + (k / Math.max(1, bandCount - 1)) * 0.34 + seed * 0.001,
+      centerY:
+        positionCenter - bandSpread / 2 + (k / Math.max(1, bandCount - 1)) * bandSpread + seed * 0.001,
       freqMul: freq * (1 + k * 0.18),
       loopX,
       loopY,
@@ -288,24 +323,44 @@ function renderAuroraGradientFrame(ctx, width, height, colors, loopPhase, option
       spineY: new Float32Array(staticAxisSize),
       thickness: new Float32Array(staticAxisSize),
       filament: new Float32Array(staticAxisSize),
+      envelope: new Float32Array(staticAxisSize),
     };
 
     for (let idx = 0; idx < staticAxisSize; idx++) {
       const sx = sxLookup[idx];
-      const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
-      band.spineY[idx] = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
-      band.thickness[idx] =
-        0.045 + foldAmount * 0.08 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.025;
 
-      // rayons/filaments fins : bruit à haute fréquence + contraste resserré
-      // (smoothstep sur une fenêtre étroite) pour des stries nettes plutôt
-      // qu'un dégradé flou — c'est le principal correctif de netteté.
-      const filamentNoise = fbm2(
-        sx * band.freqMul * 20 + band.loopX * 2.2,
-        band.phase * 3.1 + band.loopY * 1.3,
+      // Enveloppe basse fréquence, différente par rideau (offset k*7.3) :
+      // certaines zones de la largeur sont franchement marquées (hautes,
+      // lumineuses), d'autres presque absentes — l'effet "la grandeur varie
+      // par endroit". `variation=0` désactive l'effet (retombe sur l'ancien
+      // comportement uniforme).
+      const envelopeNoise = fbm2(
+        sx * band.freqMul * 0.32 + band.loopX * 0.4 + k * 7.3,
+        band.phase * 0.5 + band.loopY * 0.3,
         3
       );
-      band.filament[idx] = smoothstep(0.4, 0.6, filamentNoise);
+      const envelope01 = smoothstep(0.28, 0.72, envelopeNoise);
+      const effectiveEnvelope = 1 - variationAmount * (1 - envelope01);
+      band.envelope[idx] = effectiveEnvelope;
+
+      const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
+      band.spineY[idx] = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
+      const baseThickness =
+        0.045 + foldAmount * 0.08 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.025;
+      // l'enveloppe réduit aussi l'épaisseur (donc la hauteur visuelle du
+      // rideau), pas seulement sa luminosité — un rideau "faible" à cet
+      // endroit doit avoir l'air plus petit, pas juste plus terne.
+      band.thickness[idx] = baseThickness * (0.25 + 0.9 * effectiveEnvelope);
+
+      // Rayons/filaments fins : bruit "en crête" (transitions nettes, pas des
+      // bosses arrondies) à haute fréquence + contraste resserré — c'est ce
+      // qui donne des stries nettes plutôt qu'un dégradé flou.
+      const filamentNoise = ridgedFbm2(
+        sx * band.freqMul * 34 + band.loopX * 2.6,
+        band.phase * 3.1 + band.loopY * 1.6,
+        3
+      );
+      band.filament[idx] = smoothstep(0.45, 0.55, filamentNoise);
     }
 
     bands.push(band);
@@ -371,17 +426,20 @@ function writeAuroraPixel(
     const d = (sy - spineY) / Math.max(0.001, thickness);
     if (d < -1.4 || d > 3.2) continue;
 
-    // bord bas net, dégradé vers le haut — silhouette typique d'un rideau d'aurore
-    const spread = d < 0 ? 0.22 : 0.62 + band.foldAmount * 0.32;
-    const shape = Math.exp(-(d * d) / (2 * spread * spread));
+    // bord bas net, dégradé vers le haut — silhouette typique d'un rideau d'aurore.
+    // Le Math.pow ajoute du contraste sur la silhouette elle-même (pas
+    // seulement sur les rayons) : les bords redeviennent nets au lieu de se
+    // diluer dans un dégradé.
+    const spread = d < 0 ? 0.16 : 0.42 + band.foldAmount * 0.24;
+    const shape = Math.pow(Math.exp(-(d * d) / (2 * spread * spread)), 1.7);
 
     const shimmer =
-      0.6 + 0.4 * fbm2(sxForShimmer * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
-    const filamentFactor = 0.5 + 0.7 * band.filament[staticIdx];
-    const w = shape * shimmer * filamentFactor;
+      0.5 + 0.5 * fbm2(sxForShimmer * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
+    const filamentFactor = 0.25 + 1.05 * band.filament[staticIdx];
+    const w = shape * shimmer * filamentFactor * band.envelope[staticIdx];
     if (w <= 0.002) continue;
 
-    const edge = clamp01(1 - Math.abs(d) * 1.8);
+    const edge = clamp01(1 - Math.abs(d) * 2.3);
     const blended = mixOklab(glowOklab, rimOklab, edge);
     const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
 
@@ -402,7 +460,10 @@ function writeAuroraPixel(
     }
   }
 
-  a = Math.min(1, a) * globalIntensity;
+  // léger S-curve sur l'alpha final : renforce le contraste global (zones
+  // faibles encore plus discrètes, zones fortes encore plus franches) au
+  // lieu d'un dégradé linéaire un peu plat.
+  a = smoothstep(0.04, 0.92, Math.min(1, a)) * globalIntensity;
   pixels[pixelIndex] = Math.min(255, r);
   pixels[pixelIndex + 1] = Math.min(255, g);
   pixels[pixelIndex + 2] = Math.min(255, b);

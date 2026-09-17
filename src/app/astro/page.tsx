@@ -3,7 +3,13 @@ import Eyebrow from "@/components/Eyebrow";
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
 import AuroraGradient from "@/components/AuroraGradientVideo";
-import { identity, astroProjects, equipment } from "@/lib/data";
+import MultiImageComparison from "@/components/MultiImageComparison";
+import {
+  identity,
+  astroProjects,
+  equipment,
+  astroComparisonImages,
+} from "@/lib/data";
 
 export default function AstroHome() {
   const visibleProjects = astroProjects.filter((project) => project.isDisplay);
@@ -97,6 +103,10 @@ export default function AstroHome() {
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
 
           </p>
+          <div>
+            <MultiImageComparison images={astroComparisonImages} />
+          </div>
+          
         </div>  
         
       </section>
