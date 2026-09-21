@@ -213,7 +213,7 @@ export const astroComparisonImages: ComparisonImage[] = [
     src: "/imgs/img1.jpg",
     alt: "Première version",
     label: "Version 1",
-    textPosition: "top",
+    textPosition: "bottom",
   },
   {
     src: "/imgs/img2.jpg",
@@ -225,7 +225,7 @@ export const astroComparisonImages: ComparisonImage[] = [
     src: "/imgs/img3.jpg",
     alt: "Troisième version",
     label: "Version 3",
-    textPosition: "top",
+    textPosition: "bottom",
   },
   {
     src: "/imgs/img4.jpg",

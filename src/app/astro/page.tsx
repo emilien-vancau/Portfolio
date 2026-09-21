@@ -18,7 +18,7 @@ export default function AstroHome() {
     <div className="theme-astro bg-[#0a1230]">
       {/* ---------------------------------------------------------- HERO */}
       <section className="relative mx-auto flex min-h-[calc(80vh-4rem)] flex-col justify-evenly overflow-hidden pb-24 pt-10 md:pt-15">
-        <AuroraGradient opacity={0.7} />
+        <AuroraGradient opacity={0.9} />
         <StarField count={130} className="z-10" />
         <div
           aria-hidden
@@ -84,6 +84,7 @@ export default function AstroHome() {
             The step where art meet science. I use a combination of software and techniques to bring out the best in the data, while preserving the natural beauty of the objects.
             The goal is not to paint a canvas by using extravagant colors and effects that erase the original data, but to reveal the hidden details and structures that are present in the data, while keeping a natural look.
           </p>
+          <MultiImageComparison images={astroComparisonImages} />
         </div>  
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
@@ -103,10 +104,6 @@ export default function AstroHome() {
           <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
 
           </p>
-          <div>
-            <MultiImageComparison images={astroComparisonImages} />
-          </div>
-          
         </div>  
         
       </section>

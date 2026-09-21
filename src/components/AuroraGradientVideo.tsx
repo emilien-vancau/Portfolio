@@ -40,8 +40,8 @@ export default function AuroraGradient({ opacity = 1 }: AuroraGradientProps = {}
       // to play as soon as the component mounts.
       preload="auto"
     >
-      <source src="/gradients/aurora-gradient-loop.webm" type="video/webm" />
       <source src="/gradients/aurora-gradient-loop.mp4" type="video/mp4" />
+      <source src="/gradients/aurora-gradient-loop.webm" type="video/webm" />
     </video>
   );
 }

@@ -44,27 +44,27 @@ const gradientsDirectory = path.dirname(fileURLToPath(import.meta.url));
 // ---------------------------------------------------------------------------
 
 const CONFIG = {
-  colors: ['#EAFFF4', '#4BE8A0', '#2E6E80', '#16224D'], // [rim, glow, horizon, deep]
+  colors: ['#FFFFFF', '#6FC6D9', '#274C7A', '#15204C'], // [rim, glow, horizon, deep] — bleu/cyan, façon aurore filmée
 
   // Same three dials as the flow gradient, so both gradients can be tuned
   // and reasoned about the same way, even though they drive different math
   // internally (distortion ~ curtain "fold", swirl ~ horizontal "drift").
-  scale: 55,
-  distortion: 55,
-  swirl: 40,
+  scale: 10,
+  distortion: 0,
+  swirl: 60,
 
   // Aurora-specific extras (no equivalent in the flow gradient):
   direction: 0, // 0-3 quarter turns — quel bord de départ pour `position` ci-dessous
-  position: 30, // 0-100 : où se centre le rideau le long de l'axe perpendiculaire à `direction`
-  // (0 = collé au bord de départ — l'ancien comportement par défaut —, 100 = collé au bord opposé).
-  variation: 60, // 0-100 : à quel point la hauteur/intensité de l'aurore varie d'un endroit à
+  position: 50, // 0-100 : où se centre le rideau le long de l'axe perpendiculaire à `direction`
+  // (0 = collé au bord de départ, 100 = collé au bord opposé, 50 = centré).
+  variation: 10, // 0-100 : à quel point la hauteur/intensité de l'aurore varie d'un endroit à
   // l'autre de la largeur (0 = uniforme, 100 = zones marquées / zones presque invisibles).
   intensity: 100, // 0-100 global opacity — also adjustable later, live, via the <video>'s `opacity` prop
-  bandCount: 1,
-  groundGlow: 20,
+  bandCount: 1, // une seule grande nappe continue plutôt que plusieurs rubans distincts
+  groundGlow: 10,
   ambient: 0,
-  stars: false,
-  starCount: 60,
+  stars: true,
+  starCount: 90,
   seed: 0,
 
   // VITESSE du mouvement, en millisecondes pour un tour complet de dérive —
@@ -74,18 +74,18 @@ const CONFIG = {
   // tours entiers (`loopCycles`) tiennent dans la durée totale de la vidéo
   // (frameCount / fps) pour se rapprocher le plus possible de cette vitesse
   // tout en gardant un bouclage parfait (voir le log au lancement).
-  loopDurationMs: 50000,
+  loopDurationMs: 120000,
 
-  width: 960, // plus net qu'avant (720x360) sans exploser le temps de rendu
-  height: 540, // grâce à l'optimisation par colonne/ligne ci-dessous (~6-7 min pour 900 frames).
+  width: 920, // plus net qu'avant (720x360) sans exploser le temps de rendu
+  height: 560, // grâce à l'optimisation par colonne/ligne ci-dessous (~6-7 min pour 900 frames).
 
-  frameCount: 900, // frames per loop — contrôle la fluidité et la durée du fichier, PAS la vitesse du motif
+  frameCount: 1200, // frames per loop — contrôle la fluidité et la durée du fichier, PAS la vitesse du motif
   fps: 40, // playback framerate; durée du fichier = frameCount / fps secondes (ici : 22.5s)
 
   // Couleur de fond utilisée UNIQUEMENT pour aplatir la vidéo de repli
   // (celle qui perd la transparence) — idéalement la couleur de fond
   // réelle du Hero, pour que le repli reste invisible.
-  fallbackBackground: '#05070f',
+  fallbackBackground: '#15204C',
 
   outputPathAlpha: path.resolve(gradientsDirectory, '../../public/gradients/aurora-gradient-loop.webm'),
   outputPathFallback: path.resolve(gradientsDirectory, '../../public/gradients/aurora-gradient-loop.mp4'),
@@ -209,35 +209,14 @@ function loopOffset(loopPhase, radius, cycles = 1) {
   return [Math.cos(angle) * radius, Math.sin(angle) * radius];
 }
 
-function ridgeNoise2D(x, y) {
-  return 1 - Math.abs(valueNoise2D(x, y) * 2 - 1);
-}
-
-/** Bruit "en crête" : transitions nettes plutôt que des bosses arrondies — mieux adapté à des filaments/rayons qu'un fbm classique. */
-function ridgedFbm2(x, y, octaves = 3) {
-  let value = 0;
-  let amp = 0.5;
-  let cx = x;
-  let cy = y;
-  for (let i = 0; i < octaves; i++) {
-    value += amp * ridgeNoise2D(cx, cy);
-    const rx = cx * NOISE_ROTATION_COS - cy * NOISE_ROTATION_SIN;
-    const ry = cx * NOISE_ROTATION_SIN + cy * NOISE_ROTATION_COS;
-    cx = rx * 2 + 100;
-    cy = ry * 2 + 100;
-    amp *= 0.55;
-  }
-  return value;
-}
-
 // ---------------------------------------------------------------------------
 // Core renderer — writes straight into a raw RGBA buffer (no canvas needed)
 //
-// Identique à aurora-gradient-video.js (même correctifs de netteté : rayons
-// filamenteux en bruit "en crête" + bord bas resserré + contraste, même
-// enveloppe basse fréquence par rideau pour l'effet "la grandeur varie par
-// endroit", même `position` réglable, mêmes calculs mis en cache par
-// colonne/ligne selon `direction`) et même `loopCycles` pour la vitesse.
+// Identique à aurora-gradient-video.js (grand renflement large et doux,
+// symétrique, enveloppe très basse fréquence pour UNE grande vague plutôt
+// que plusieurs petites, texture interne discrète, mêmes calculs mis en
+// cache par colonne/ligne selon `direction`) et même `loopCycles` pour la
+// vitesse.
 // ---------------------------------------------------------------------------
 
 function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, options = {}) {
@@ -247,15 +226,15 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
     swirl = 40,
     direction = 0,
     intensity = 100,
-    bandCount = 3,
-    groundGlow = 20,
+    bandCount = 1,
+    groundGlow = 10,
     ambient = 0,
     stars = false,
     starCount = 60,
     seed = 0,
     loopCycles = 1,
-    position = 30,
-    variation = 60,
+    position = 50,
+    variation = 20,
   } = options;
 
   const [rimHex, glowHex, horizonHex, deepHex] = resolveAuroraColors(colors);
@@ -264,9 +243,9 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
   const horizonRgb = hexToRgb(horizonHex);
   const deepRgb = hexToRgb(deepHex);
 
-  const freq = 1 + (1 - scale / 100) * 2.8;
+  const freq = 1.1 + (1 - scale / 100) * 2.3;
   const foldAmount = distortion / 100;
-  const driftAmount = 0.15 + (swirl / 100) * 1.1;
+  const driftAmount = 0.08 + (swirl / 100) * 0.5;
   const globalIntensity = intensity / 100;
   const groundGlowAmount = groundGlow / 100;
   const ambientAmount = ambient / 100;
@@ -288,7 +267,7 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
   }
 
   const positionCenter = position / 100;
-  const bandSpread = 0.3;
+  const bandSpread = 0.16;
   const variationAmount = variation / 100;
 
   const bands = [];
@@ -312,26 +291,26 @@ function renderAuroraGradientFrameToBuffer(width, height, colors, loopPhase, opt
       const sx = sxLookup[idx];
 
       const envelopeNoise = fbm2(
-        sx * band.freqMul * 0.32 + band.loopX * 0.4 + k * 7.3,
+        sx * band.freqMul * 0.09 + band.loopX * 0.25 + k * 7.3,
         band.phase * 0.5 + band.loopY * 0.3,
         3
       );
-      const envelope01 = smoothstep(0.28, 0.72, envelopeNoise);
+      const envelope01 = smoothstep(0.2, 0.8, envelopeNoise);
       const effectiveEnvelope = 1 - variationAmount * (1 - envelope01);
       band.envelope[idx] = effectiveEnvelope;
 
-      const warp = fbm2(sx * band.freqMul * 2 + band.loopX, band.phase + band.loopY, 3);
-      band.spineY[idx] = band.centerY + (warp - 0.5) * 0.5 * (0.4 + foldAmount);
+      const warp = fbm2(sx * band.freqMul * 0.7 + band.loopX, band.phase + band.loopY, 3);
+      band.spineY[idx] = band.centerY + (warp - 0.5) * 1.8 * (0.5 + foldAmount);
       const baseThickness =
-        0.045 + foldAmount * 0.08 + fbm2(sx * band.freqMul * 3 + 5.2, band.loopX * 0.7, 2) * 0.025;
-      band.thickness[idx] = baseThickness * (0.25 + 0.9 * effectiveEnvelope);
+        0.17 + foldAmount * 0.09 + fbm2(sx * band.freqMul * 1.2 + 5.2, band.loopX * 0.5, 2) * 0.05;
+      band.thickness[idx] = baseThickness * (0.4 + 0.85 * effectiveEnvelope);
 
-      const filamentNoise = ridgedFbm2(
-        sx * band.freqMul * 34 + band.loopX * 2.6,
-        band.phase * 3.1 + band.loopY * 1.6,
+      const filamentNoise = fbm2(
+        sx * band.freqMul * 16 + band.loopX * 1.6,
+        band.phase * 2.1 + band.loopY * 0.9,
         3
       );
-      band.filament[idx] = smoothstep(0.45, 0.55, filamentNoise);
+      band.filament[idx] = smoothstep(0.15, 0.85, filamentNoise);
     }
 
     bands.push(band);
@@ -388,18 +367,18 @@ function writeAuroraPixel(
     const spineY = band.spineY[staticIdx];
     const thickness = band.thickness[staticIdx];
     const d = (sy - spineY) / Math.max(0.001, thickness);
-    if (d < -1.4 || d > 3.2) continue;
+    if (d < -2.6 || d > 2.6) continue;
 
-    const spread = d < 0 ? 0.16 : 0.42 + band.foldAmount * 0.24;
-    const shape = Math.pow(Math.exp(-(d * d) / (2 * spread * spread)), 1.7);
+    const spread = d < 0 ? 0.85 : 1.05 + band.foldAmount * 0.2;
+    const shape = Math.exp(-(d * d) / (2 * spread * spread));
 
     const shimmer =
-      0.5 + 0.5 * fbm2(sxForShimmer * band.freqMul * 6 + band.loopX * 1.4, sy * 8 + band.phase, 3);
-    const filamentFactor = 0.25 + 1.05 * band.filament[staticIdx];
+      0.75 + 0.25 * fbm2(sxForShimmer * band.freqMul * 2.5 + band.loopX * 1.2, sy * 4 + band.phase, 3);
+    const filamentFactor = 0.86 + 0.24 * band.filament[staticIdx];
     const w = shape * shimmer * filamentFactor * band.envelope[staticIdx];
     if (w <= 0.002) continue;
 
-    const edge = clamp01(1 - Math.abs(d) * 2.3);
+    const edge = clamp01(1 - Math.abs(d) * 1.1);
     const blended = mixOklab(glowOklab, rimOklab, edge);
     const [cr, cg, cb] = oklabToRgb(blended[0], blended[1], blended[2]);
 
@@ -420,7 +399,7 @@ function writeAuroraPixel(
     }
   }
 
-  a = smoothstep(0.04, 0.92, Math.min(1, a)) * globalIntensity;
+  a = smoothstep(0.02, 0.98, Math.min(1, a)) * globalIntensity;
   buffer[pixelIndex] = Math.min(255, r);
   buffer[pixelIndex + 1] = Math.min(255, g);
   buffer[pixelIndex + 2] = Math.min(255, b);
