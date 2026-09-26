@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Eyebrow from "@/components/Eyebrow";
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
 import AuroraGradient from "@/components/AuroraGradientVideo";
@@ -9,6 +8,7 @@ import {
   astroProjects,
   equipment,
   astroComparisonImages,
+  astroTexts,
 } from "@/lib/data";
 
 export default function AstroHome() {
@@ -62,50 +62,61 @@ export default function AstroHome() {
 
       {/* ------------------------------------------------------- ABOUT */}
       <section className="border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
-        <div className="mx-auto mt-10 max-w-6xl">
-          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
-            Handmade Acquisition
-          </h2>
-          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-            All data are acquired through my own equipment. This is one of the most important aspects of the hobby,
-            as the challenge is to get the best possible data to keep the processing and post-processing as simple as possible.<br />
+        <div className="mx-auto mt-10 max-w-6xl space-y-10">
+          <article>
+            <h2
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              style={{ fontFamily: "var(--font-display-astro)" }}
+            >
+              {astroTexts.acquisition.title}
+            </h2>
+            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              {astroTexts.acquisition.description}
+            </p>
+            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              {astroTexts.acquisition.maintenance}
+            </p>
+          </article>
 
-            Ensuring that the equipment is well-maintained and calibrated is ensiential to get the best possible data. This includes regular cleaning of the optics, checking the collimation of the telescope, 
-            and ensuring that the mount is properly aligned and balanced.
+          <article>
+            <h2
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              style={{ fontFamily: "var(--font-display-astro)" }}
+            >
+              {astroTexts.processing.title}
+            </h2>
+            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              {astroTexts.processing.description}
+            </p>
+            <div className="box-shadow mb-6">
+              <MultiImageComparison images={astroComparisonImages} />
+            </div>
+          </article>
 
-            
-          </p>
-        </div>  
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
-            Finest processing
-          </h2>
-          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-            The step where art meet science. I use a combination of software and techniques to bring out the best in the data, while preserving the natural beauty of the objects.
-            The goal is not to paint a canvas by using extravagant colors and effects that erase the original data, but to reveal the hidden details and structures that are present in the data, while keeping a natural look.
-          </p>
-          <MultiImageComparison images={astroComparisonImages} />
-        </div>  
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
-            Data storytelling
-          </h2>
-          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-            Aside the artistic aspect of astrophotography, exploiting the observation to its fullest is also a way to learn more about the observed object and the universe in general.
-            To do so, I'm making a bit of processing/cleaning on the pictures before analyzing and extracting the information. With clean data in hand, it's possible to known more about what is observed 
-            
-          </p>
+          <article>
+            <h2
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              style={{ fontFamily: "var(--font-display-astro)" }}
+            >
+              {astroTexts.dataStorytelling.title}
+            </h2>
+            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              {astroTexts.dataStorytelling.description}
+            </p>
+          </article>
+
+          <article>
+            <h2
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              style={{ fontFamily: "var(--font-display-astro)" }}
+            >
+              {astroTexts.collaboration.title}
+            </h2>
+            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              {astroTexts.collaboration.description}
+            </p>
+          </article>
         </div>
-        
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl" style={{ fontFamily: "var(--font-display-astro)" }}>
-            Gear making
-          </h2>
-          <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-
-          </p>
-        </div>  
-        
       </section>
 
       {/* ------------------------------------------------- OBSERVATIONS */}

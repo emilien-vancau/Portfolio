@@ -188,7 +188,7 @@ export const astroProjects: {
       "Exemple provisoire : série d'observations et de croquis réalisés sur plusieurs semaines pour suivre le passage d'une comète.",
     statusTag: StatusType.Completed,
     tags: ["Observation", "Carnet de terrain"],
-    isDisplay: true,
+    isDisplay: false,
   },
   {
     title: "Ton vrai projet astro",
@@ -197,7 +197,7 @@ export const astroProjects: {
       "Emplacement prêt pour un vrai projet ou une vraie observation — remplace ce texte par ton contenu.",
     statusTag: StatusType.Completed,
     tags: ["À compléter"],
-    isDisplay: true,
+    isDisplay: false,
   },
 ];
 
@@ -210,27 +210,46 @@ export const equipment: { name: string; note: string }[] = [
 
 export const astroComparisonImages: ComparisonImage[] = [
   {
-    src: "/imgs/img1.jpg",
-    alt: "Première version",
-    label: "Version 1",
+    src: "/imgs/M51_raw_rgb.jpg",
+    alt: "Raw RGB image",
+    label: "Raw RGB image",
     textPosition: "bottom",
   },
   {
-    src: "/imgs/img2.jpg",
-    alt: "Deuxième version",
-    label: "Version 2",
+    src: "/imgs/M51_stacked_rgb.jpg",
+    alt: "Stacked RGB image",
+    label: "Stacked RGB image",
     textPosition: "bottom",
   },
   {
-    src: "/imgs/img3.jpg",
-    alt: "Troisième version",
-    label: "Version 3",
-    textPosition: "bottom",
-  },
-  {
-    src: "/imgs/img4.jpg",
-    alt: "Version finale",
-    label: "Version finale",
+    src: "/imgs/M51_final_lrgb.jpg",
+    alt: "Final LRGB image ",
+    label: "Final LRGB image ",
     textPosition: "bottom",
   },
 ];
+
+export const astroTexts = {
+  acquisition: {
+    title: "Handmade acquisition",
+    description:
+      "All data are acquired through my own equipment and carefully assembled observational systems. This is one of the most important and foundational aspects of the hobby, as the primary challenge is to acquire the best possible observational data to keep the subsequent processing and post-processing steps as straightforward and efficient as possible.",
+    maintenance:
+      "Ensuring that the equipment is well-maintained, properly calibrated, and in optimal condition is essential to obtain the highest quality data possible. This comprehensive maintenance routine includes regular and thorough cleaning of all optical surfaces, precise checking and adjustment of the telescope's collimation to ensure perfect alignment, and ensuring that the mount is not only properly aligned but also well-balanced to minimize vibration and tracking errors.",
+  },
+  processing: {
+    title: "Finest processing",
+    description:
+      "The processing step is where art and science converge in a meaningful way. I employ a sophisticated combination of specialized software tools and advanced techniques to bring out the finest details and characteristics in the acquired data, while simultaneously preserving the natural beauty and authenticity of the astronomical objects being observed. The overarching goal is not to simply paint a canvas using extravagant colors, artificial enhancements, and dramatic effects that would erase or misrepresent the original observational data, but rather to thoughtfully reveal the hidden details, intricate structures, and faint features that are genuinely present in the raw data. The aim is always to maintain a natural and scientifically accurate appearance that honors the true nature of what was observed.",
+  },
+  dataStorytelling: {
+    title: "Data storytelling",
+    description:
+      "Beyond the purely artistic aspect of astrophotography, exploiting each observation to its fullest potential is also a powerful way to deepen our understanding about the observed celestial object and the broader universe in general. To accomplish this meaningful analysis, I engage in careful and systematic processing and data cleaning on the pictures before conducting detailed analysis and extracting scientifically valuable information. With clean, well-processed data in hand, it becomes possible to develop a more comprehensive understanding and knowledge about what was observed, uncovering patterns, physical properties, and relationships that might otherwise remain hidden. This analytical approach transforms raw observations into meaningful insights.",
+  },
+  collaboration: {
+    title: "Working through collaboration",
+    description:
+      "While astrophotography is certainly a hobby that can be deeply enjoyed in solitude and personal pursuit, it is equally and importantly a fantastic way to meaningfully connect with other passionate enthusiasts and learn from their diverse experiences and unique perspectives. By actively sharing my observations, findings, and results with others and actively collaborating on projects and analysis with fellow observers, I can gain valuable new insights and continuously improve my technical and artistic skills. Collaboration also frequently leads to unexpected new discoveries, shared learning experiences, and a progressively deeper and more nuanced understanding of the universe and our place within it. The community aspect enriches not only my own work but also contributes to collective knowledge.",
+  },
+};

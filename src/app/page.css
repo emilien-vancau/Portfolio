@@ -1,9 +1,10 @@
-/* Electric tide
- * MISTED SKY #DFFBFF
- * PALE LAGOON #6FD8F2
- * CLEAR HANADA #4C5BE0
- * NIGHT INDIGO #2A2450
- */
+
+.box-shadow {
+  box-shadow: 1px 1px 55px 6px rgba(0,0,0,0.41);
+  -webkit-box-shadow: 1px 1px 55px 6px rgba(0,0,0,0.41);
+  -moz-box-shadow: 1px 1px 55px 6px rgba(0,0,0,0.41);
+}
+
 .gradient-denchou {
   position: relative;
   overflow: hidden;

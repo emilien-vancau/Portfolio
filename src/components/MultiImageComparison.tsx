@@ -301,8 +301,8 @@ export default function MultiImageComparison({
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="m15 18-6-6 6-6" />
-                <path d="m9 18 6-6-6-6" />
+                <path d="m10 18-6-6 6-6" />
+                <path d="m14 6 6 6-6 6" />
               </svg>
             </span>
           )}
