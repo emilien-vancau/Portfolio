@@ -62,10 +62,10 @@ export default function AstroHome() {
 
       {/* ------------------------------------------------------- ABOUT */}
       <section className="border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
-        <div className="mx-auto mt-10 max-w-6xl space-y-10">
-          <article>
+        <div className="mx-auto mt-10 max-w-6xl space-y-20">
+          <article className="box-shadow-br bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6">
             <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.acquisition.title}
@@ -78,9 +78,9 @@ export default function AstroHome() {
             </p>
           </article>
 
-          <article>
+          <article className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6">
             <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.processing.title}
@@ -89,25 +89,43 @@ export default function AstroHome() {
               {astroTexts.processing.description}
             </p>
             <div className="box-shadow mb-6">
-              <MultiImageComparison images={astroComparisonImages} />
+              <MultiImageComparison className="h-auto w-full rounded-lg object-cover" images={astroComparisonImages} />
             </div>
           </article>
 
-          <article>
-            <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
-              style={{ fontFamily: "var(--font-display-astro)" }}
-            >
-              {astroTexts.dataStorytelling.title}
-            </h2>
-            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
-              {astroTexts.dataStorytelling.description}
-            </p>
+          <article className="box-shadow-br space-y-8 bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6">
+            <div className="grid gap-x-8 gap-y-0 md:grid-cols-2">
+              <h2
+                className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                style={{ fontFamily: "var(--font-display-astro)" }}
+              >
+                {astroTexts.dataStorytelling.title}
+              </h2>
+              <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6] md:col-start-1 md:row-start-2">
+                {astroTexts.dataStorytelling.description}
+              </p>
+              <img
+                className="h-auto w-full rounded-lg object-cover md:col-start-2 md:row-start-2"
+                src="/imgs/NGC2903_RGB_Annotated.jpg"
+                alt="NGC2903 RGB Annotated"
+              />
+            </div>
+            <div className="grid gap-8 md:grid-cols-2 md:items-center">
+              <img
+                className="h-auto w-full rounded-lg object-cover"
+                src="/imgs/NGC5353_astromapper.png"
+                alt="NGC5353 Astromapper"
+              />
+              <p className="text-lg leading-relaxed text-[#9fb0d6]">
+                Texte d’exemple à remplacer : ajoutez ici une description de cette image ou
+                les informations que vous souhaitez partager.
+              </p>
+            </div>
           </article>
 
-          <article>
+          <article className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6">
             <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl"
+              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.collaboration.title}

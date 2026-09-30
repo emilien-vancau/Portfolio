@@ -5,6 +5,18 @@
   -moz-box-shadow: 1px 1px 55px 6px rgba(0,0,0,0.41);
 }
 
+.box-shadow-br{
+  box-shadow: 5px 6px 22px -4px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 5px 6px 22px -4px rgba(0,0,0,0.75);
+  -moz-box-shadow: 5px 6px 22px -4px rgba(0,0,0,0.75);
+}
+
+.box-shadow-bl{
+  box-shadow: -5px 6px 22px -4px rgba(0,0,0,0.75);
+  -webkit-box-shadow: -5px 6px 22px -4px rgba(0,0,0,0.75);
+  -moz-box-shadow: -5px 6px 22px -4px rgba(0,0,0,0.75);
+}
+
 .gradient-denchou {
   position: relative;
   overflow: hidden;
