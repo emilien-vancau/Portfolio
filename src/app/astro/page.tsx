@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
-import AuroraGradient from "@/components/AuroraGradientVideo";
+import NorthernLightsLayer from "@/components/NorthernLightsLayer";
 import MultiImageComparison from "@/components/MultiImageComparison";
 import {
   identity,
@@ -18,7 +18,7 @@ export default function AstroHome() {
     <div className="theme-astro bg-[#0a1230]">
       {/* ---------------------------------------------------------- HERO */}
       <section className="relative mx-auto flex min-h-[calc(80vh-4rem)] flex-col justify-evenly overflow-hidden pb-24 pt-10 md:pt-15">
-        <AuroraGradient opacity={0.9} />
+        <NorthernLightsLayer />
         <StarField count={130} className="z-10" />
         <div
           aria-hidden
@@ -31,10 +31,10 @@ export default function AstroHome() {
 
             Deep Sky Encounter
           </h1>
-          <h2 className="max-w-3xl text-lg leading-relaxed text-[#9fb0d6] md:text-xl">
+          <h2 className="max-w-3xl text-lg leading-relaxed text-[#C2CEE1] md:text-xl">
             By {identity.firstName} {identity.lastName} — amateur astronomer, astrophotographer, and telescope maker.
           </h2>
-          <p className="max-w-xl text-lg leading-relaxed text-[#9fb0d6]">
+          <p className="max-w-xl text-lg leading-relaxed text-[#C2CEE1]">
             {identity.astroTagline}
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -102,7 +102,7 @@ export default function AstroHome() {
                 {astroTexts.dataStorytelling.title}
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6] md:col-start-1 md:row-start-2">
-                {astroTexts.dataStorytelling.description}
+                {astroTexts.dataStorytelling.description1}
               </p>
               <img
                 className="h-auto w-full rounded-lg object-cover md:col-start-2 md:row-start-2"
@@ -117,8 +117,7 @@ export default function AstroHome() {
                 alt="NGC5353 Astromapper"
               />
               <p className="text-lg leading-relaxed text-[#9fb0d6]">
-                Texte d’exemple à remplacer : ajoutez ici une description de cette image ou
-                les informations que vous souhaitez partager.
+                {astroTexts.dataStorytelling.description2}
               </p>
             </div>
           </article>

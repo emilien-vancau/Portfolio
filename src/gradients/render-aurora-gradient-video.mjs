@@ -55,7 +55,7 @@ const CONFIG = {
 
   // Aurora-specific extras (no equivalent in the flow gradient):
   direction: 0, // 0-3 quarter turns — quel bord de départ pour `position` ci-dessous
-  position: 50, // 0-100 : où se centre le rideau le long de l'axe perpendiculaire à `direction`
+  position: 40, // 0-100 : où se centre le rideau le long de l'axe perpendiculaire à `direction`
   // (0 = collé au bord de départ, 100 = collé au bord opposé, 50 = centré).
   variation: 10, // 0-100 : à quel point la hauteur/intensité de l'aurore varie d'un endroit à
   // l'autre de la largeur (0 = uniforme, 100 = zones marquées / zones presque invisibles).
@@ -74,7 +74,7 @@ const CONFIG = {
   // tours entiers (`loopCycles`) tiennent dans la durée totale de la vidéo
   // (frameCount / fps) pour se rapprocher le plus possible de cette vitesse
   // tout en gardant un bouclage parfait (voir le log au lancement).
-  loopDurationMs: 120000,
+  loopDurationMs: 150000,
 
   width: 920, // plus net qu'avant (720x360) sans exploser le temps de rendu
   height: 560, // grâce à l'optimisation par colonne/ligne ci-dessous (~6-7 min pour 900 frames).

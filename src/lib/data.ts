@@ -173,6 +173,15 @@ export const astroProjects: {
     isDisplay: true,
   },
   {
+    title: "Hearth of the Hearth nebula",
+    period: "",
+    description:
+      "Project about the acquisition of the Hearth nebula (IC 1805) in the constellation of Cassiopeia. The resulting image is a mosaïc of 4 panels having a resolution of 40M pixels approximately. ",
+    tags: ["Deep Learning", "Dataset", "Galaxies", "Deep Sky", "Pixinsight"],
+    statusTag: StatusType.Active,
+    isDisplay: true,
+  },
+  {
     title: "Construction d'un Dobson 200mm",
     period: "2023",
     description:
@@ -244,9 +253,12 @@ export const astroTexts = {
   },
   dataStorytelling: {
     title: "Data storytelling",
-    description:
-      "Beyond the purely artistic aspect of astrophotography, exploiting each observation to its fullest potential is also a powerful way to deepen our understanding about the observed celestial object and the broader universe in general. To accomplish this meaningful analysis, I engage in careful and systematic processing and data cleaning on the pictures before conducting detailed analysis and extracting scientifically valuable information. With clean, well-processed data in hand, it becomes possible to develop a more comprehensive understanding and knowledge about what was observed, uncovering patterns, physical properties, and relationships that might otherwise remain hidden. This analytical approach transforms raw observations into meaningful insights.",
-    },
+    description1:
+      "Beyond the purely artistic aspect of astrophotography, exploiting each observation to its fullest potential is also a powerful way to deepen our understanding about the observed celestial object and the broader universe in general. To accomplish this meaningful analysis, I engage in careful and systematic processing and data cleaning on the pictures before conducting detailed analysis and extracting scientifically valuable information.",
+    description2: 
+      "With clean, well-processed data in hand, it becomes possible to develop a more comprehensive understanding and knowledge about what was observed, uncovering patterns, physical properties, and relationships that might otherwise remain hidden. This analytical approach transforms raw observations into meaningful insights.",
+  },
+    
   collaboration: {
     title: "Working through collaboration",
     description:
