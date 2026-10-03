@@ -204,7 +204,8 @@ export default function MultiImageComparison({
               alt={image.alt}
               fill
               draggable={false}
-              sizes="100vw"
+              sizes="(min-width: 1200px) 1104px, calc(100vw - 96px)"
+              loading={image.src === "/imgs/M51_final_lrgb.jpg" ? "eager" : undefined}
               className={`pointer-events-none ${
                 objectFit === "cover"
                   ? "object-cover"

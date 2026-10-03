@@ -265,3 +265,58 @@ export const astroTexts = {
       "While astrophotography is certainly a hobby that can be deeply enjoyed in solitude and personal pursuit, it is equally and importantly a fantastic way to meaningfully connect with other passionate enthusiasts and learn from their diverse experiences and unique perspectives. By actively sharing my observations, findings, and results with others and actively collaborating on projects and analysis with fellow observers, I can gain valuable new insights and continuously improve my technical and artistic skills. Collaboration also frequently leads to unexpected new discoveries, shared learning experiences, and a progressively deeper and more nuanced understanding of the universe and our place within it. The community aspect enriches not only my own work but also contributes to collective knowledge.",
   },
 };
+
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  title: string;
+  caption?: string;
+  /** Dimensions réelles du fichier : elles servent uniquement à réserver le ratio (pas de layout shift). */
+  width: number;
+  height: number;
+};
+
+export const astroGallery: GalleryImage[] = [
+  {
+    src: "/imgs/M51_final_lrgb.jpg",
+    alt: "Messier 51, the Whirlpool galaxy",
+    title: "M51 — Whirlpool Galaxy",
+    caption: "LRGB • Newton 200/1000",
+    width: 2048,
+    height: 1506,
+  },
+  {
+    src: "/imgs/pk 080-06.1.jpg",
+    alt: "pk 080-06.1 protoplanetary nebula",
+    title: "pk 080-06.1 - Protoplanetary Nebula",
+    caption: "L • protoplanetary nebula",
+    width: 300,
+    height: 300,
+  },
+  {
+    src: "/imgs/OU4.jpg",
+    alt: "Outers 4 Squid Nebula",
+    title: "OU4 — Squid Nebula",
+    caption: "HOO • Newton 200/1000",
+    width: 1024,
+    height: 681,
+  },
+  {
+    src: "/imgs/Vdb4.jpg",
+    alt: "Vdb4",
+    title: "Vdb4",
+    caption: "RGB • Newton 200/1000",
+    width: 1024,
+    height: 681,
+  },
+  {
+    src: "/imgs/LBN 331.jpg",
+    alt: "LBN 331",
+    title: "LBN 331",
+    caption: "HaRGB • Newton 200/1000",
+    width: 1024,
+    height: 681,
+  },
+  // Ajoute ici 2 à 7 images supplémentaires (mélange de formats portrait / paysage / carré
+  // pour que le masonry soit visible).
+];

@@ -3,12 +3,14 @@ import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
 import NorthernLightsLayer from "@/components/NorthernLightsLayer";
 import MultiImageComparison from "@/components/MultiImageComparison";
+import MasonryGallery from "@/components/MasonryGallery";
 import {
   identity,
   astroProjects,
   equipment,
   astroComparisonImages,
   astroTexts,
+  astroGallery,
 } from "@/lib/data";
 
 export default function AstroHome() {
@@ -155,9 +157,19 @@ export default function AstroHome() {
         </div>
       </section>
       
-      <section id="gallery" className="scroll-mt-24 px-6 py-20">
-
-
+      <section
+        id="gallery"
+        className="scroll-mt-24 border-t border-[#26315f] px-6 py-20"
+      >
+        <div className="mx-auto max-w-6xl">
+          <h2
+            className="mb-10 text-2xl italic text-[#e5ebeb] md:text-3xl"
+            style={{ fontFamily: "var(--font-display-astro)" }}
+          >
+            Gallery
+          </h2>
+          <MasonryGallery images={astroGallery} />
+        </div>
       </section>
 
       {/* ---------------------------------------------------- MATERIEL */}
