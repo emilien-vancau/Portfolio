@@ -53,6 +53,11 @@ body {
   outline-offset: 3px;
 }
 
+::selection {
+  background: #A7E0E7;
+  color: #152451;
+}
+
 /* ============================================================
    THEME SCOPES — chaque page s'enveloppe dans .theme-pro ou
    .theme-astro ; tous les composants lisent ces variables.

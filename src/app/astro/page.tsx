@@ -136,7 +136,7 @@ export default function AstroHome() {
         </div>
       </section>
 
-      {/* ------------------------------------------------- OBSERVATIONS */}
+      {/* ------------------------------------------------- OBSERVATIONS/PROJECTS/GALLERY */}
       <section id="observations" className="scroll-mt-24 px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -153,6 +153,11 @@ export default function AstroHome() {
             ))}
           </div>
         </div>
+      </section>
+      
+      <section id="gallery" className="scroll-mt-24 px-6 py-20">
+
+
       </section>
 
       {/* ---------------------------------------------------- MATERIEL */}
