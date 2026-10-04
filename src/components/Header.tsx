@@ -29,11 +29,12 @@ export default function Header() {
           : "bg-[#e5ebeb]/90 border-[#c9d2e0]")
       }
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <span className="m-[0] p-[0]">
-
-        </span>
-
+      <div
+        className={
+          "mx-auto flex items-center justify-between gap-6 py-4 " +
+          (isAstro ? "max-w-7xl px-6" : "w-full px-[20rem]")
+        }
+      >
         <nav className="hidden items-center gap-6 md:flex">
           {links.map((link) => (
             <a

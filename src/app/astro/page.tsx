@@ -63,8 +63,9 @@ export default function AstroHome() {
       </section>
 
       {/* ------------------------------------------------------- ABOUT */}
-      <section className="border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
-        <div className="mx-auto mt-10 max-w-6xl space-y-20">
+      <section className="relative isolate overflow-hidden border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
+        <StarField count={300} className="z-0" />
+        <div className="relative z-10 mx-auto mt-10 max-w-7xl space-y-20">
           <article className="box-shadow-br bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6">
             <h2
               className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
@@ -140,7 +141,7 @@ export default function AstroHome() {
 
       {/* ------------------------------------------------- OBSERVATIONS/PROJECTS/GALLERY */}
       <section id="observations" className="scroll-mt-24 px-6 py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <h2
               className="text-2xl italic text-[#e5ebeb] md:text-3xl"
@@ -161,7 +162,7 @@ export default function AstroHome() {
         id="gallery"
         className="scroll-mt-24 border-t border-[#26315f] px-6 py-20"
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <h2
             className="mb-10 text-2xl italic text-[#e5ebeb] md:text-3xl"
             style={{ fontFamily: "var(--font-display-astro)" }}
@@ -177,7 +178,7 @@ export default function AstroHome() {
         id="materiel"
         className="scroll-mt-24 border-t border-[#26315f] bg-[#101b3f] px-6 py-20"
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <h2
             className="mb-10 text-2xl italic text-[#e5ebeb] md:text-3xl"
             style={{ fontFamily: "var(--font-display-astro)" }}
@@ -197,8 +198,8 @@ export default function AstroHome() {
 
       {/* ------------------------------------------------------ CONTACT */}
       <section id="contact" className="relative scroll-mt-24 overflow-hidden px-6 py-24">
-        <StarField count={60} />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6">
+        
+        <div className="relative mx-auto flex bg-[#1B275E] p-16 rounded-xl max-w-7xl flex-col items-start gap-6">
           <h2
             className="max-w-lg text-2xl italic text-[#e5ebeb] md:text-3xl"
             style={{ fontFamily: "var(--font-display-astro)" }}
