@@ -144,6 +144,46 @@ export default function ProHome() {
         </div>
       </section>
 
+      {/* ------------------------------------------------------ SOCIALS */}
+      <section
+        id="socials"
+        className="scroll-mt-24 border-t border-[#c9d2e0] px-6 py-16"
+      >
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-8 text-2xl font-semibold text-[#152451] md:text-3xl">
+            Find me online
+          </h2>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href="https://github.com/AlbireoDSE"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit my GitHub profile (opens in a new tab)"
+              className="group flex min-w-52 items-center gap-4 rounded-2xl border border-[#c9d2e0] bg-white px-6 py-5 text-[#152451] shadow-sm transition-all hover:-translate-y-1 hover:border-[#2d3085] hover:shadow-md"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8 shrink-0">
+                <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.68-3.76-1.32-3.76-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.71 2.62 1.22 3.26.93.1-.72.39-1.22.71-1.5-2.48-.28-5.09-1.24-5.09-5.51 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.06 1.15a10.6 10.6 0 0 1 5.57 0c2.12-1.45 3.06-1.15 3.06-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.28-2.61 5.22-5.1 5.5.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+              </svg>
+              <span className="font-medium transition-colors group-hover:text-[#2d3085]">GitHub</span>
+              <span aria-hidden="true" className="ml-auto text-[#4a5578] transition-transform group-hover:translate-x-1">↗</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/emilien-vancauwenberghe-ab734b1b9/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit my LinkedIn profile (opens in a new tab)"
+              className="group flex min-w-52 items-center gap-4 rounded-2xl border border-[#c9d2e0] bg-white px-6 py-5 text-[#152451] shadow-sm transition-all hover:-translate-y-1 hover:border-[#2d3085] hover:shadow-md"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8 shrink-0">
+                <path d="M5.2 3.5a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8ZM3.6 9h3.2v11.4H3.6V9Zm5.2 0h3.1v1.6h.05A3.4 3.4 0 0 1 15 8.7c3.3 0 3.9 2.2 3.9 5v6.7h-3.2v-5.9c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1v6H8.8V9Z" />
+              </svg>
+              <span className="font-medium transition-colors group-hover:text-[#2d3085]">LinkedIn</span>
+              <span aria-hidden="true" className="ml-auto text-[#4a5578] transition-transform group-hover:translate-x-1">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ------------------------------------------------------ CONTACT */}
       <section id="contact" className="scroll-mt-24 px-6 py-24">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-3xl bg-[#152451] px-8 py-14 md:px-14">

@@ -51,7 +51,7 @@ export const workExperiences: {
   {
     role: "Intern AI Engineer",
     place: "Exail Robotics Belgium",
-    period: "09/2026 — 11/2026",
+    period: "09/2025 — 11/2025",
     description:
       "Research and development of AI models for Mine Counter Measures applications, focusing on data analysis and processing pipelines as well as model training and evaluation.",
     isDisplay: true,
@@ -317,6 +317,14 @@ export const astroGallery: GalleryImage[] = [
     width: 1024,
     height: 681,
   },
+  {
+    src: "/imgs/LDN673.jpg",
+    alt: "LDN 673",
+    title: "LDN 673",
+    caption: "L • Newton 200/1000",
+    width: 1024,
+    height: 681,
+  }
   // Ajoute ici 2 à 7 images supplémentaires (mélange de formats portrait / paysage / carré
   // pour que le masonry soit visible).
 ];

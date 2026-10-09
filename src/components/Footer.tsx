@@ -23,12 +23,6 @@ export default function Footer() {
           <a href="mailto:emilien.vancau@gmail.com" className="hover:underline">
             emilien.vancau@gmail.com
           </a>
-          <a href="https://github.com/AlbireoDSE" className="hover:underline">
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/emilien-vancauwenberghe-ab734b1b9/" className="hover:underline">
-            LinkedIn
-          </a>
         </div>
       </div>
     </footer>

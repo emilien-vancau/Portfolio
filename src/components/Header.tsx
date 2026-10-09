@@ -4,15 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS_PRO = [
-  { href: "/#experience", label: "Background" },
+  { href: "/#experience", label: "Experience" },
   { href: "/#projets", label: "Personal projects" },
+  { href: "/#socials", label: "Socials" },
   { href: "/#contact", label: "Contact" },
 ];
 
 const NAV_LINKS_ASTRO = [
+  { href: "/astro#gear", label: "Gear" },
   { href: "/astro#observations", label: "Observations" },
-  { href: "/astro#materiel", label: "Gear" },
+  { href: "/astro#gallery", label: "Gallery"},
   { href: "/astro#contact", label: "Contact" },
+  
 ];
 
 export default function Header() {
@@ -30,21 +33,18 @@ export default function Header() {
       }
     >
       <div
-        className={
-          "mx-auto flex items-center justify-between gap-6 py-4 " +
-          (isAstro ? "max-w-7xl px-6" : "w-full px-[20rem]")
-        }
+        className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-3 sm:px-6 md:flex-row md:justify-between"
       >
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav aria-label="Navigation principale" className="flex w-full items-center justify-center gap-1 sm:w-auto sm:justify-start">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={
-                "text-sm transition-opacity hover:opacity-100 " +
+                "whitespace-nowrap rounded-full px-3 py-2 text-xs transition-colors sm:px-4 sm:text-sm " +
                 (isAstro
-                  ? "text-[#9fb0d6] opacity-90 hover:text-[#a7e0e7]"
-                  : "text-[#4a5578] opacity-90 hover:text-[#2d3085]")
+                  ? "text-[#9fb0d6] hover:bg-[#101b3f] hover:text-[#a7e0e7]"
+                  : "text-[#4a5578] hover:bg-white/70 hover:text-[#2d3085]")
               }
             >
               {link.label}
