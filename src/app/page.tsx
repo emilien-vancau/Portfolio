@@ -186,7 +186,12 @@ export default function ProHome() {
 
       {/* ------------------------------------------------------ CONTACT */}
       <section id="contact" className="scroll-mt-24 px-6 py-24">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-3xl bg-[#152451] px-8 py-14 md:px-14">
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-3xl bg-[#152451] px-8 py-14 md:px-14"
+          style={{
+            backgroundImage: "url('/svgs/silk-card.svg#svgView(preserveAspectRatio(none))')",
+            backgroundSize: "100% 100%",
+          }}
+          >
           <h2 className="max-w-lg text-2xl font-semibold text-white md:text-3xl">
             Reach out to me:
           </h2>

@@ -120,32 +120,41 @@ export default function AstroHome() {
             </div>
           </article>
 
-          <article className="box-shadow-br space-y-8 bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6">
-            <div className="grid gap-x-8 gap-y-0 md:grid-cols-2">
-              <h2
-                className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
-                style={{ fontFamily: "var(--font-display-astro)" }}
-              >
-                {astroTexts.dataStorytelling.title}
-              </h2>
-              <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6] md:col-start-1 md:row-start-2">
-                {astroTexts.dataStorytelling.description1}
-              </p>
-              <img
-                className="h-auto w-full rounded-lg object-cover md:col-start-2 md:row-start-2"
-                src="/imgs/NGC2903_RGB_Annotated.jpg"
-                alt="NGC2903 RGB Annotated"
-              />
-            </div>
-            <div className="grid gap-8 md:grid-cols-2 md:items-center">
-              <img
-                className="h-auto w-full rounded-lg object-cover"
-                src="/imgs/NGC5353_astromapper.png"
-                alt="NGC5353 Astromapper"
-              />
-              <p className="text-lg leading-relaxed text-[#9fb0d6]">
-                {astroTexts.dataStorytelling.description2}
-              </p>
+          <article className="box-shadow-br relative isolate space-y-8 overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6"
+          >
+            <img
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-1/2 z-0 h-full w-auto max-w-none -translate-x-1/2 opacity-20"
+              src="/imgs/planisphere.png"
+              alt=""
+            />
+            <div className="relative z-10 space-y-8">
+              <div className="grid gap-x-8 gap-y-0 md:grid-cols-2">
+                <h2
+                  className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                  style={{ fontFamily: "var(--font-display-astro)" }}
+                >
+                  {astroTexts.dataStorytelling.title}
+                </h2>
+                <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6] md:col-start-1 md:row-start-2">
+                  {astroTexts.dataStorytelling.description1}
+                </p>
+                <img
+                  className="h-auto w-full rounded-lg object-cover md:col-start-2 md:row-start-2"
+                  src="/imgs/NGC2903_RGB_Annotated.jpg"
+                  alt="NGC2903 RGB Annotated"
+                />
+              </div>
+              <div className="grid gap-8 md:grid-cols-2 md:items-center">
+                <img
+                  className="h-auto w-full rounded-lg object-cover"
+                  src="/imgs/NGC5353_astromapper.png"
+                  alt="NGC5353 Astromapper"
+                />
+                <p className="text-lg leading-relaxed text-[#9fb0d6]">
+                  {astroTexts.dataStorytelling.description2}
+                </p>
+              </div>
             </div>
           </article>
 
