@@ -124,8 +124,8 @@ export default function AstroHome() {
           >
             <img
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-1/2 z-0 h-full w-auto max-w-none -translate-x-1/2 opacity-20"
-              src="/imgs/planisphere.png"
+              className="pointer-events-none absolute inset-y-0 left-1/2 z-0 h-full w-auto max-w-none -translate-x-1/2 opacity-10"
+              src="/imgs/planisphere.jpg"
               alt=""
             />
             <div className="relative z-10 space-y-8">
@@ -158,7 +158,15 @@ export default function AstroHome() {
             </div>
           </article>
 
-          <article className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6">
+          <article
+            className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(27, 39, 94, 0.88), rgba(27, 39, 94, 0.88)), url('/imgs/colab_bckg.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             <h2
               className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
@@ -218,7 +226,7 @@ export default function AstroHome() {
           >
             Looking for more ?
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <a
               href="https://www.flickr.com/people/154121771@N02/"
               target="_blank"
@@ -239,12 +247,35 @@ export default function AstroHome() {
               aria-label="Visit my Instagram profile (opens in a new tab)"
               className="group flex items-center gap-4 rounded-xl border border-[#26315f] bg-[#0a1230] p-5 text-[#e5ebeb] transition-colors hover:border-[#a7e0e7] hover:bg-[#1B275E]"
             >
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-8 w-8 shrink-0 stroke-current" strokeWidth="1.8">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-8 w-8 shrink-0" strokeWidth="1.8">
+                <defs>
+                  <linearGradient id="instagram-gradient" x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#ffdc80" />
+                    <stop offset="0.45" stopColor="#f77737" />
+                    <stop offset="0.72" stopColor="#e1306c" />
+                    <stop offset="1" stopColor="#833ab4" />
+                  </linearGradient>
+                </defs>
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="url(#instagram-gradient)" />
+                <circle cx="12" cy="12" r="4" stroke="url(#instagram-gradient)" />
+                <circle cx="17.5" cy="6.5" r="1" fill="url(#instagram-gradient)" stroke="none" />
               </svg>
               <span className="font-medium group-hover:text-[#a7e0e7]">Instagram</span>
+            </a>
+            <a
+              href="https://app.astrobin.com/u/Deep-Sky-Encounter"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit my AstroBin profile (opens in a new tab)"
+              className="group flex items-center gap-4 rounded-xl border border-[#26315f] bg-[#0a1230] p-5 text-[#e5ebeb] transition-colors hover:border-[#a7e0e7] hover:bg-[#1B275E]"
+            >
+              <img
+                src="/icons/astrobin%20logo.png"
+                alt=""
+                aria-hidden="true"
+                className="h-8 w-8 shrink-0 object-contain"
+              />
+              <span className="font-medium group-hover:text-[#a7e0e7]">AstroBin</span>
             </a>
           </div>
         </div>

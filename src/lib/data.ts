@@ -177,37 +177,11 @@ export const astroProjects: {
     period: "",
     description:
       "Project about the acquisition of the Hearth nebula (IC 1805) in the constellation of Cassiopeia. The resulting image is a mosaïc of 4 panels having a resolution of 40M pixels approximately. ",
-    tags: ["Deep Learning", "Dataset", "Galaxies", "Deep Sky", "Pixinsight"],
+    tags: ["Astrophotography", "Nebula", "Composition", "Deep Sky", "Pixinsight"],
     statusTag: StatusType.Active,
     isDisplay: true,
   },
-  {
-    title: "Construction d'un Dobson 200mm",
-    period: "2023",
-    description:
-      "Exemple provisoire : fabrication maison d'un télescope Dobson, du miroir à la structure en bois.",
-    statusTag: StatusType.Completed,
-    tags: ["Bricolage", "Optique"],
-    isDisplay: false,
-  },
-  {
-    title: "Suivi de la comète C/2023",
-    period: "2023",
-    description:
-      "Exemple provisoire : série d'observations et de croquis réalisés sur plusieurs semaines pour suivre le passage d'une comète.",
-    statusTag: StatusType.Completed,
-    tags: ["Observation", "Carnet de terrain"],
-    isDisplay: false,
-  },
-  {
-    title: "Ton vrai projet astro",
-    period: "202X",
-    description:
-      "Emplacement prêt pour un vrai projet ou une vraie observation — remplace ce texte par ton contenu.",
-    statusTag: StatusType.Completed,
-    tags: ["À compléter"],
-    isDisplay: false,
-  },
+  
 ];
 
 export const equipment: { name: string; note: string }[] = [
