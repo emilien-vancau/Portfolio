@@ -125,7 +125,7 @@ export default function AstroHome() {
             <img
               aria-hidden="true"
               className="pointer-events-none absolute inset-y-0 left-1/2 z-0 h-full w-auto max-w-none -translate-x-1/2 opacity-10"
-              src="/imgs/planisphere.jpg"
+              src="/bckgs/planisphere.jpg"
               alt=""
             />
             <div className="relative z-10 space-y-8">
@@ -162,7 +162,7 @@ export default function AstroHome() {
             className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(27, 39, 94, 0.88), rgba(27, 39, 94, 0.88)), url('/imgs/colab_bckg.jpg')",
+                "linear-gradient(rgba(27, 39, 94, 0.88), rgba(27, 39, 94, 0.88)), url('/bckgs/colab_bckg.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

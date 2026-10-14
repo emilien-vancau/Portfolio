@@ -1,7 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # exclude specific files or directories
-/public/
+/public/*
+!/public/bckgs/
+!/public/icons/
+!/public/svgs/
 
 # dependencies
 /node_modules
