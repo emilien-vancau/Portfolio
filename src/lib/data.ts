@@ -45,31 +45,45 @@ export const workExperiences: {
   role: string;
   place: string;
   period: string;
-  description: string;
+  description: string[];
+  toolsTechnologies: string[];
   isDisplay: boolean;
 }[] = [
   {
     role: "Intern AI Engineer",
     place: "Exail Robotics Belgium",
     period: "09/2025 — 11/2025",
-    description:
-      "Research and development of AI models for Mine Counter Measures applications, focusing on data analysis and processing pipelines as well as model training and evaluation.",
+    description: [
+      "Built multi-view AI models for mine countermeasures, trained on real sonar data.",
+      "Built an ETL pipeline from SQL views to Pandas and grouped snippets into objects with KNN.",
+      "Designed geometric and photometric augmentation with georeferenced metadata updates.",
+      "Adapted MVCNN and ConvLSTM to binary classification with missing-view masking.",
+      "Analysed training and validation loss curves to improve model performance.",
+    ],
+    toolsTechnologies: ["Python", "SQL", "Pandas", "PyTorch", "OpenCV", "KNN", "MVCNN", "ConvLSTM"],
     isDisplay: true,
   },
   {
     role: "Student Job Administrative help",
     place: "ChWapi",
     period: "07/2022 — 08/2022",
-    description:
+    description: [
       "Administrative support at the visits management, including data entry, contacting patients and registering their visits.",
+    ],
+    toolsTechnologies: [],
     isDisplay: true,
   },
   {
     role: "Intern Web Developer",
-    place: "Technord",
+    place: "Technord MES/IT",
     period: "01/2021 — 05/2021",
-    description:
-      "Contributed to the development of an internal platform to manage production orders between the company and its clients.",
+    description: [
+      "Built an Angular SPA for production orders: planned lists, sortable tables, details.",
+      "Developed an ASP.NET Core Web API consuming the ERP web service, with NTLM auth.",
+      "Wrote unit tests for MsSQL stored procedures in Visual Studio 2019.",
+      "Researched Camunda BPM for BPMN workflow orchestration.",
+    ],
+    toolsTechnologies: ["Angular", "ASP.NET Core", "C#", "ERP Web Service", "NTLM", "MsSQL", "Visual Studio", "Camunda BPM", "BPMN"],
     isDisplay: true,
   }
 ];

@@ -91,9 +91,23 @@ export default function ProHome() {
                   {item.role}
                   <span className="font-normal text-[#4a5578]"> — {item.place}</span>
                 </h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#4a5578]">
-                  {item.description}
-                </p>
+                <ul className="mt-2 max-w-2xl list-disc space-y-1 pl-5 text-sm leading-relaxed text-[#4a5578]">
+                  {item.description.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+                {item.toolsTechnologies.length > 0 && (
+                  <div className="mt-4 max-w-2xl">
+                    <p className="meta-label mb-2 text-[#2d3085]">Tools &amp; technologies</p>
+                    <div className="flex flex-wrap gap-2">
+                      {item.toolsTechnologies.map((technology) => (
+                        <Tag key={technology} backgroundColor="#ebf0f0">
+                          {technology}
+                        </Tag>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </li>
             ))}
           </ol>
