@@ -3,7 +3,7 @@ import type { GalleryImage } from "@/lib/data";
 
 export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
   return (
-    <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+    <div className="columns-1 gap-2 sm:columns-2 lg:columns-3">
       {images.map((img) => (
         <figure
           key={img.src}

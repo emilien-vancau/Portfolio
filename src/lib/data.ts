@@ -277,7 +277,7 @@ export const astroGallery: GalleryImage[] = [
     src: "/imgs/pk 080-06.1.jpg",
     alt: "pk 080-06.1 protoplanetary nebula",
     title: "pk 080-06.1 - Protoplanetary Nebula",
-    caption: "L • protoplanetary nebula",
+    caption: "L • Newton 200/1000",
     width: 300,
     height: 300,
   },
