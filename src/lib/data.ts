@@ -229,29 +229,33 @@ export const astroComparisonImages: ComparisonImage[] = [
 export const astroTexts = {
   acquisition: {
     title: "Handmade acquisition",
+    punchline: "Every photon, caught by my own hands.",
     description:
-      "All data are acquired through my own equipment and carefully assembled observational systems. This is one of the most important and foundational aspects of the hobby, as the primary challenge is to acquire the best possible observational data to keep the subsequent processing and post-processing steps as straightforward and efficient as possible.",
+      "Every image starts with gear I assembled and tuned myself. The better the data at the telescope, the easier everything after it.",
     maintenance:
-      "Ensuring that the equipment is well-maintained, properly calibrated, and in optimal condition is essential to obtain the highest quality data possible. This comprehensive maintenance routine includes regular and thorough cleaning of all optical surfaces, precise checking and adjustment of the telescope's collimation to ensure perfect alignment, and ensuring that the mount is not only properly aligned but also well-balanced to minimize vibration and tracking errors.",
+      "Clean optics, precise collimation, a balanced mount: there is no shortcut to quality data.",
   },
   processing: {
     title: "Finest processing",
+    punchline: "Reveal. Never invent.",
     description:
       "The processing step is where art and science converge in a meaningful way. I employ a sophisticated combination of specialized software tools and advanced techniques to bring out the finest details and characteristics in the acquired data, while simultaneously preserving the natural beauty and authenticity of the astronomical objects being observed. The overarching goal is not to simply paint a canvas using extravagant colors, artificial enhancements, and dramatic effects that would erase or misrepresent the original observational data, but rather to thoughtfully reveal the hidden details, intricate structures, and faint features that are genuinely present in the raw data. The aim is always to maintain a natural and scientifically accurate appearance that honors the true nature of what was observed.",
   },
   dataStorytelling: {
     title: "Data storytelling",
+    punchline: "A picture is also a dataset.",
     description1:
-      "Beyond the purely artistic aspect of astrophotography, exploiting each observation to its fullest potential is also a powerful way to deepen our understanding about the observed celestial object and the broader universe in general. To accomplish this meaningful analysis, I engage in careful and systematic processing and data cleaning on the pictures before conducting detailed analysis and extracting scientifically valuable information.",
-    description2: 
-      "With clean, well-processed data in hand, it becomes possible to develop a more comprehensive understanding and knowledge about what was observed, uncovering patterns, physical properties, and relationships that might otherwise remain hidden. This analytical approach transforms raw observations into meaningful insights.",
+      "Beyond aesthetics, every observation can teach something. Once cleaned, my images are analysed to extract real scientific information.",
+    description2:
+      "Clean data reveals patterns, physical properties and hidden relationships, and turns raw observations into insights.",
   },
-    
   collaboration: {
-    title: "Working through collaboration",
-    description:
-      "While astrophotography is certainly a hobby that can be deeply enjoyed in solitude and personal pursuit, it is equally and importantly a fantastic way to meaningfully connect with other passionate enthusiasts and learn from their diverse experiences and unique perspectives. By actively sharing my observations, findings, and results with others and actively collaborating on projects and analysis with fellow observers, I can gain valuable new insights and continuously improve my technical and artistic skills. Collaboration also frequently leads to unexpected new discoveries, shared learning experiences, and a progressively deeper and more nuanced understanding of the universe and our place within it. The community aspect enriches not only my own work but also contributes to collective knowledge.",
-  },
+  title: "Working through collaboration",
+  quote: "Science is a collaborative enterprise, spanning the generations.",
+  author: "Carl Sagan",
+  description:
+     "While astrophotography is certainly a hobby that can be deeply enjoyed in solitude and personal pursuit, it is equally and importantly a fantastic way to meaningfully connect with other passionate enthusiasts and learn from their diverse experiences and unique perspectives. By actively sharing my observations, findings, and results with others and actively collaborating on projects and analysis with fellow observers, I can gain valuable new insights and continuously improve my technical and artistic skills. Collaboration also frequently leads to unexpected new discoveries, shared learning experiences, and a progressively deeper and more nuanced understanding of the universe and our place within it. The community aspect enriches not only my own work but also contributes to collective knowledge.",
+},
 };
 
 export type GalleryImage = {

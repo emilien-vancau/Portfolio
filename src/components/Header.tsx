@@ -85,7 +85,7 @@ function ThemeToggle({ isAstro }: { isAstro: boolean }) {
           (!isAstro ? "text-white" : isAstro ? "text-[#9fb0d6]" : "text-[#4a5578]")
         }
       >
-        <span aria-hidden>{"</>"}</span> Info
+        <span aria-hidden>{"</>"}</span> IT
       </Link>
       <Link
         href="/astro"

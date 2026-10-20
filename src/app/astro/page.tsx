@@ -4,6 +4,7 @@ import StarField from "@/components/StarField";
 import NorthernLightsLayer from "@/components/NorthernLightsLayer";
 import MultiImageComparison from "@/components/MultiImageComparison";
 import MasonryGallery from "@/components/MasonryGallery";
+import Punchline from "@/components/Punchline";
 import {
   identity,
   astroProjects,
@@ -66,53 +67,61 @@ export default function AstroHome() {
       <section className="relative isolate overflow-hidden border-y border-[#26315f] bg-[#101b3f] px-6 py-16">
         <StarField count={300} className="z-0" />
         <div className="relative z-10 mx-auto mt-10 max-w-7xl space-y-20">
-          <article id="gear" className="scroll-mt-24 box-shadow-br grid gap-8 bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-start"
+
+          {/*HANDMADE ACQUISITION*/}
+          <article id="gear" className="scroll-mt-24 box-shadow-br grid overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
           style={{
               backgroundImage: "url('/svgs/edge-card.svg#svgView(preserveAspectRatio(none))')",
               backgroundSize: "100% 100%",
             }}
           >
-            <div>
+            <div className="p-6">
               <h2
-                className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
                 style={{ fontFamily: "var(--font-display-astro)" }}
               >
                 {astroTexts.acquisition.title}
               </h2>
-              <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+              <div className="pt-12">
+                <Punchline>{astroTexts.acquisition.punchline}</Punchline>
+              </div>
+              <p className="mb-4 text-xl leading-relaxed text-[#9fb0d6]">
                 {astroTexts.acquisition.description}
               </p>
-              <p className="text-lg leading-relaxed text-[#9fb0d6]">
+              <p className="text-xl leading-relaxed text-[#9fb0d6]">
                 {astroTexts.acquisition.maintenance}
               </p>
             </div>
-            <div className="md:mt-[3.75rem] md:w-full md:max-w-xl md:justify-self-end">
-              <div className="grid gap-3 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-              <img
-                className="h-auto w-full rounded-lg object-cover"
-                src="/imgs/setup.jpg"
-                alt="setup1"
-              />
-              <div className="grid gap-px overflow-hidden rounded-2xl border border-[#26315f] bg-[#26315f]">
+            <div className="grid min-h-0 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]">
+              <div className="grid grid-cols-2 gap-px bg-[#26315f] md:grid-cols-1 md:grid-rows-4">
                 {equipment.map((item) => (
-                  <div key={item.name} className="bg-[#0a1230] p-6">
+                  <div key={item.name} className="flex flex-col justify-center bg-[#0a1230] p-4 md:p-6">
                     <p className="meta-label mb-2 text-[#a7e0e7]">{item.name}</p>
                     <p className="text-sm text-[#c3cde8]">{item.note}</p>
                   </div>
                 ))}
               </div>
-              </div>
+              <img
+                className="h-64 w-full object-cover md:h-full md:min-h-0"
+                src="/imgs/setup.jpg"
+                alt="setup1"
+              />
             </div>
           </article>
 
+          {/* FINEST PROCESSING */}
           <article className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6">
             <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+              className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.processing.title}
             </h2>
-            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+            <div className="pt-6 pb-4">
+              <Punchline>{astroTexts.processing.punchline}</Punchline>
+            </div>
+            
+            <p className="mb-6 text-xl leading-relaxed text-[#9fb0d6]">
               {astroTexts.processing.description}
             </p>
             <div className="box-shadow mb-6">
@@ -120,7 +129,8 @@ export default function AstroHome() {
             </div>
           </article>
 
-          <article className="box-shadow-br relative isolate space-y-8 overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] p-6"
+          {/* DATA STORYTELLING */}
+          <article className="box-shadow-br relative isolate overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7]"
           >
             <img
               aria-hidden="true"
@@ -128,29 +138,30 @@ export default function AstroHome() {
               src="/bckgs/planisphere.jpg"
               alt=""
             />
-            <div className="relative z-10 space-y-8">
-              <div className="grid gap-x-8 gap-y-0 md:grid-cols-2">
+            <div className="relative z-10 grid gap-0 md:grid-cols-2">
+              <div className="p-6">
                 <h2
-                  className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                  className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
                   style={{ fontFamily: "var(--font-display-astro)" }}
                 >
                   {astroTexts.dataStorytelling.title}
                 </h2>
-                <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6] md:col-start-1 md:row-start-2">
+                <Punchline>{astroTexts.dataStorytelling.punchline}</Punchline>
+                <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6]">
                   {astroTexts.dataStorytelling.description1}
                 </p>
-                <img
-                  className="h-auto w-full rounded-lg object-cover md:col-start-2 md:row-start-2"
-                  src="/imgs/NGC2903_RGB_Annotated.jpg"
-                  alt="NGC2903 RGB Annotated"
-                />
               </div>
-              <div className="grid gap-8 md:grid-cols-2 md:items-center">
-                <img
-                  className="h-auto w-full rounded-lg object-cover"
-                  src="/imgs/NGC5353_astromapper.png"
-                  alt="NGC5353 Astromapper"
-                />
+              <img
+                className="block h-full w-full object-cover rounded-bl-lg"
+                src="/imgs/NGC2903_RGB_Annotated.jpg"
+                alt="NGC2903 RGB Annotated"
+              />
+              <img
+                className="block h-full w-full object-cover rounded-tr-lg"
+                src="/imgs/NGC5353_astromapper.png"
+                alt="NGC5353 Astromapper"
+              />
+              <div className="flex items-center p-6">
                 <p className="text-lg leading-relaxed text-[#9fb0d6]">
                   {astroTexts.dataStorytelling.description2}
                 </p>
@@ -158,6 +169,7 @@ export default function AstroHome() {
             </div>
           </article>
 
+          {/* COLLABORATION */}
           <article
             className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6"
             style={{
@@ -168,14 +180,21 @@ export default function AstroHome() {
             }}
           >
             <h2
-              className="mb-6 text-2xl italic text-[#e5ebeb] md:text-3xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+              className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.collaboration.title}
             </h2>
-            <p className="mb-6 text-lg leading-relaxed text-[#9fb0d6]">
+      
+            <p className="max-w-2xl text-lg leading-relaxed text-[#9fb0d6]">
               {astroTexts.collaboration.description}
             </p>
+
+            <div className="mt-10">
+              <Punchline author={astroTexts.collaboration.author}>
+                {astroTexts.collaboration.quote}
+              </Punchline>
+            </div>
           </article>
         </div>
       </section>
