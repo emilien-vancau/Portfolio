@@ -213,8 +213,6 @@ export const equipment: { name: string; note: string }[] = [
   { name: "Imager", note: "QHYCCD - QHY294C" },
   { name: "Filters", note: "Optolong - L-extreme / L-pro" },
   { name: "Corrector", note:"TS-Optics - Coma corrector Maxfield 0.95X" },
-  { name: "Focuser", note:"Pegasus Astro - FocusCube 2" },
-  { name: "Power, Data distribution", note:"Pegasus Astro - Pocket Powerbox Advance Gen2"},
 ];
 
 export const astroComparisonImages: ComparisonImage[] = [
@@ -257,7 +255,7 @@ export const astroTexts = {
     title: "Data storytelling",
     punchline: "A picture is also a dataset.",
     description1:
-      "Beyond aesthetics, every observation can teach something. Once cleaned, my images are analysed to extract real scientific information.",
+      "Beyond the purely artistic aspect of astrophotography, exploiting each observation to its fullest potential is also a powerful way to deepen our understanding about the observed celestial object and the broader universe in general. I engage in careful processing and data cleaning on the pictures before conducting detailed analysis and extracting scientifically valuable information.",
     description2:
       "Clean data reveals patterns, physical properties and hidden relationships, and turns raw observations into insights. Once the data are ready, we can perform analyses such as:",
     analysisOperations: [
@@ -335,6 +333,4 @@ export const astroGallery: GalleryImage[] = [
     width: 1024,
     height: 681,
   }
-  // Ajoute ici 2 à 7 images supplémentaires (mélange de formats portrait / paysage / carré
-  // pour que le masonry soit visible).
 ];
