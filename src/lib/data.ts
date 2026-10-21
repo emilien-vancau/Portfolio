@@ -152,7 +152,7 @@ export const proProjects: {
     title: "Isolation Forest",
     period: "",
     description:
-      "From scratch implementation of the IForest algorithm for anomaly detection in datasets.",
+      "A from-scratch implementation of the Isolation Forest algorithm, which flags anomalies by how quickly random trees isolate each observation. The project benchmarks it against LOF, OCSVM, and scikit-learns iForest on 11 datasets, measuring AUC and runtime, and studies the effects of hyperparameters and masking/swamping.",
     tags: ["Python", "SciKit-Learn", "Pandas"],
     statusTag: StatusType.Completed,
     isDisplay: true,
@@ -165,7 +165,16 @@ export const proProjects: {
     tags: ["Arduino", "Android"],
     statusTag: StatusType.Completed,
     isDisplay: true,
-  }
+  },
+   {
+    title: "Fairness in Active Learning",
+    period: "",
+    description:
+      "Master's thesis combining active learning with algorithmic fairness. Active learning's instance selection can amplify demographic bias, so the work tests pre-processing, post-processing, and FAL mitigation methods on four sensitive datasets with three model families.",
+    tags: ["Python", "Scikit-learn", "Pandas", "AIF360"],
+    statusTag: StatusType.Completed,
+    isDisplay: true,
+  },
 ];
 
 export const astroProjects: {
@@ -203,6 +212,9 @@ export const equipment: { name: string; note: string }[] = [
   { name: "Mount", note: "IOptron - Cem60-ec" },
   { name: "Imager", note: "QHYCCD - QHY294C" },
   { name: "Filters", note: "Optolong - L-extreme / L-pro" },
+  { name: "Corrector", note:"TS-Optics - Coma corrector Maxfield 0.95X" },
+  { name: "Focuser", note:"Pegasus Astro - FocusCube 2" },
+  { name: "Power, Data distribution", note:"Pegasus Astro - Pocket Powerbox Advance Gen2"},
 ];
 
 export const astroComparisonImages: ComparisonImage[] = [
@@ -247,7 +259,13 @@ export const astroTexts = {
     description1:
       "Beyond aesthetics, every observation can teach something. Once cleaned, my images are analysed to extract real scientific information.",
     description2:
-      "Clean data reveals patterns, physical properties and hidden relationships, and turns raw observations into insights.",
+      "Clean data reveals patterns, physical properties and hidden relationships, and turns raw observations into insights. Once the data are ready, we can perform analyses such as:",
+    analysisOperations: [
+      { name: "Astrometry", description: "which identifies known objects in the image." },
+      { name: "Photometry", description: "which measures the brightness of objects." },
+      { name: "Spectroscopy", description: "which reveals the chemical composition of objects." },
+      { name: "And much more", description: "" },
+    ],
   },
   collaboration: {
   title: "Working through collaboration",

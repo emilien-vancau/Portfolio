@@ -147,7 +147,7 @@ export default function AstroHome() {
                   {astroTexts.dataStorytelling.title}
                 </h2>
                 <Punchline>{astroTexts.dataStorytelling.punchline}</Punchline>
-                <p className="mb-8 text-lg leading-relaxed text-[#9fb0d6]">
+                <p className="mb-8 text-xl leading-relaxed text-[#9fb0d6]">
                   {astroTexts.dataStorytelling.description1}
                 </p>
               </div>
@@ -162,9 +162,17 @@ export default function AstroHome() {
                 alt="NGC5353 Astromapper"
               />
               <div className="flex items-center p-6">
-                <p className="text-lg leading-relaxed text-[#9fb0d6]">
-                  {astroTexts.dataStorytelling.description2}
-                </p>
+                <div className="text-xl leading-relaxed text-[#9fb0d6]">
+                  <p>{astroTexts.dataStorytelling.description2}</p>
+                  <ul className="mt-3 list-disc space-y-1 pl-4">
+                    {astroTexts.dataStorytelling.analysisOperations.map((operation) => (
+                      <li key={operation.name}>
+                        <span className="text-[#a7e0e7]">{operation.name}</span>{" "}
+                        {operation.description}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </article>
@@ -186,11 +194,11 @@ export default function AstroHome() {
               {astroTexts.collaboration.title}
             </h2>
       
-            <p className="max-w-2xl text-lg leading-relaxed text-[#9fb0d6]">
+            <p className="pt-6 text-xl leading-relaxed text-[#9fb0d6]">
               {astroTexts.collaboration.description}
             </p>
 
-            <div className="mt-10">
+            <div className="mt-10 flex justify-center">
               <Punchline author={astroTexts.collaboration.author}>
                 {astroTexts.collaboration.quote}
               </Punchline>
