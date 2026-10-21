@@ -55,7 +55,7 @@ export default function AstroHome() {
             </a>
             <Link
               href="/"
-              className="ml-auto text-sm text-[#a7e0e7] underline decoration-[#2d3085] decoration-2 underline-offset-4 hover:text-white"
+              className="text-sm text-[#a7e0e7] underline decoration-[#2d3085] decoration-2 underline-offset-4 hover:text-white md:ml-auto"
             >
               {"</>"} See also My IT World
             </Link>
@@ -152,12 +152,12 @@ export default function AstroHome() {
                 </p>
               </div>
               <img
-                className="block h-full w-full object-cover rounded-bl-lg"
+                className="block aspect-[4/3] h-full w-full object-cover rounded-bl-lg md:aspect-auto"
                 src="/imgs/NGC2903_RGB_Annotated.jpg"
                 alt="NGC2903 RGB Annotated"
               />
               <img
-                className="block h-full w-full object-cover rounded-tr-lg"
+                className="block aspect-[4/3] h-full w-full object-cover rounded-tr-lg md:aspect-auto"
                 src="/imgs/NGC5353_astromapper.png"
                 alt="NGC5353 Astromapper"
               />

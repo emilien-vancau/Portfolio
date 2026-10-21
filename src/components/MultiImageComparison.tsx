@@ -181,7 +181,7 @@ export default function MultiImageComparison({
       className={`group relative w-full select-none overflow-hidden ${className}`}
       style={{
         aspectRatio,
-        touchAction: "none",
+        touchAction: "pan-y",
       }}
     >
       {/* Images */}
@@ -242,7 +242,7 @@ export default function MultiImageComparison({
           key={index}
           type="button"
           aria-label={`Déplacer le séparateur ${index + 1}`}
-          className="group absolute inset-y-0 z-30 w-8 -translate-x-1/2 cursor-ew-resize touch-none"
+          className="group absolute inset-y-0 z-30 w-11 -translate-x-1/2 cursor-ew-resize touch-none"
           style={{
             left: `${position}%`,
           }}

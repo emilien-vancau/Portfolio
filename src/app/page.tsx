@@ -14,11 +14,11 @@ export default function ProHome() {
   return (
     <div className="theme-pro">
       {/* ---------------------------------------------------------- HERO */}
-      <section className="gradient-denchou mx-auto min-h-[calc(85vh-4rem)] flex flex-col justify-evenly gap-9 px-[20rem] pb-5 pt-5">
+      <section className="gradient-denchou mx-auto min-h-[calc(85vh-4rem)] flex flex-col justify-evenly gap-9 px-6 py-10 sm:px-10 lg:px-24 xl:px-40 2xl:px-[20rem]">
         <FlowGradientVideo />
-        <div className="flex flex-col gap-15"> 
+        <div className="flex flex-col gap-10 md:gap-15">
           <div className="flex flex-col gap-2">
-            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
+            <h1 className="max-w-3xl break-words text-4xl font-semibold leading-[1.1] tracking-tight text-[#152451] md:text-6xl">
               {identity.lastName} {identity.firstName}
             </h1>
             <h2 className="text-xl font-semibold text-[#152451]">
@@ -44,7 +44,7 @@ export default function ProHome() {
             </a>
             <Link
               href="/astro"
-              className="ml-auto text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451]"
+              className="text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451] md:ml-auto"
             >
               ✦ Follow my exploration of the heavens
             </Link>
