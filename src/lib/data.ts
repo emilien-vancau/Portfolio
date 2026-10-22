@@ -204,6 +204,15 @@ export const astroProjects: {
     statusTag: StatusType.Active,
     isDisplay: true,
   },
+  {
+    title: "Composition of a lightweight travel setup",
+    period: "",
+    description:
+      "Currently working on a lightweight travel setup for astrophotography, which will allow me to capture high-quality images of deep sky objects while traveling. The setup is designed to be portable and easy to use, without compromising on image quality.",
+    tags: ["Gear", "Travel", "Widefield", "Deep Sky", "Solar"],
+    statusTag: StatusType.Active,
+    isDisplay: true,
+  },
   
 ];
 
