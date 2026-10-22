@@ -95,7 +95,7 @@ export default function AstroHome() {
             <div className="grid min-h-0 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]">
               <div className="grid grid-cols-2 gap-px bg-[#26315f] md:grid-cols-1 md:grid-rows-4">
                 {equipment.map((item) => (
-                  <div key={item.name} className="flex flex-col justify-center bg-[#0a1230] p-4 md:p-6">
+                  <div key={item.name} className="flex flex-col justify-center bg-[#0a1230] p-4 last:odd:col-span-2 md:p-6 md:last:odd:col-span-1">
                     <p className="meta-label mb-2 text-[#a7e0e7]">{item.name}</p>
                     <p className="text-sm text-[#c3cde8]">{item.note}</p>
                   </div>

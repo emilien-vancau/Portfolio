@@ -15,8 +15,7 @@ export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
             width={img.width}
             height={img.height}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="mx-auto block h-auto max-w-full"
-            style={{ width: "auto", height: "auto" }}
+            className="block h-auto w-full"
             loading={img.src === "/imgs/M51_final_lrgb.jpg" ? "eager" : "lazy"}
           />
 
