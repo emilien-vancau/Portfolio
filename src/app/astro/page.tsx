@@ -29,7 +29,7 @@ export default function AstroHome() {
         />
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6">
           <h1
-            className="max-w-3xl text-4xl italic tracking-wide leading-[1.15] tracking-tight text-[#e5ebeb] md:text-6xl"
+            className="max-w-3xl text-4xl tracking-wide leading-[1.15] tracking-tight text-[#e5ebeb] md:text-6xl"
             style={{ fontFamily: "var(--font-display-astro)" }}>
 
             Deep Sky Encounter
@@ -77,7 +77,7 @@ export default function AstroHome() {
           >
             <div className="p-6">
               <h2
-                className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                className="mb-4 text-3xl text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
                 style={{ fontFamily: "var(--font-display-astro)" }}
               >
                 {astroTexts.acquisition.title}
@@ -112,7 +112,7 @@ export default function AstroHome() {
           {/* FINEST PROCESSING */}
           <article className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6">
             <h2
-              className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+              className="mb-4 text-3xl text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.processing.title}
@@ -141,7 +141,7 @@ export default function AstroHome() {
             <div className="relative z-10 grid gap-0 md:grid-cols-2">
               <div className="p-6">
                 <h2
-                  className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+                  className="mb-4 text-3xl text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
                   style={{ fontFamily: "var(--font-display-astro)" }}
                 >
                   {astroTexts.dataStorytelling.title}
@@ -157,7 +157,7 @@ export default function AstroHome() {
                 alt="NGC2903 RGB Annotated"
               />
               <img
-                className="block aspect-[4/3] h-full w-full object-cover rounded-tr-lg md:aspect-auto"
+                className="block aspect-[4/3] h-full w-full object-cover rounded-bl-lg md:aspect-auto"
                 src="/imgs/NGC5353_astromapper.png"
                 alt="NGC5353 Astromapper"
               />
@@ -188,7 +188,7 @@ export default function AstroHome() {
             }}
           >
             <h2
-              className="mb-4 text-3xl italic text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
+              className="mb-4 text-3xl text-[#e5ebeb] md:text-4xl underline decoration-[#a7e0e7] decoration-2 underline-offset-4"
               style={{ fontFamily: "var(--font-display-astro)" }}
             >
               {astroTexts.collaboration.title}

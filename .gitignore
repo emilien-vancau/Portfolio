@@ -6,6 +6,8 @@
 !/public/icons/
 !/public/svgs/
 
+/src/fonts
+
 # dependencies
 /node_modules
 /.pnp

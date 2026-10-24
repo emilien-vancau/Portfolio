@@ -5,47 +5,26 @@ import "./page.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Polices auto-hébergées (fichiers dans src/fonts) : pas de dépendance
-// à Google Fonts au runtime, build reproductible hors-ligne.
-const plexSans = localFont({
-  src: "../fonts/ibm-plex-sans/IBMPlexSans-Variable.ttf",
-  variable: "--font-plex-sans",
-  weight: "100 700",
-  style: "normal",
-  display: "swap",
-});
-
-const plexMono = localFont({
+// Police auto-hébergée : pas de dépendance à Google Fonts au runtime.
+const abcDiatype = localFont({
   src: [
     {
-      path: "../fonts/ibm-plex-mono/IBMPlexMono-Regular.ttf",
+      path: "../fonts/abc-diatype/ABCDiatype-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../fonts/ibm-plex-mono/IBMPlexMono-Medium.ttf",
+      path: "../fonts/abc-diatype/ABCDiatype-Medium.woff2",
       weight: "500",
       style: "normal",
     },
-  ],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
-
-const fraunces = localFont({
-  src: [
     {
-      path: "../fonts/fraunces/Fraunces-Variable.ttf",
-      weight: "300 700",
+      path: "../fonts/abc-diatype/ABCDiatype-Bold.woff2",
+      weight: "700",
       style: "normal",
     },
-    {
-      path: "../fonts/fraunces/Fraunces-Italic-Variable.ttf",
-      weight: "300 700",
-      style: "italic",
-    },
   ],
-  variable: "--font-fraunces",
+  variable: "--font-abc-diatype",
   display: "swap",
 });
 
@@ -61,10 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" data-scroll-behavior="smooth">
-      <body
-        className={`${plexSans.variable} ${plexMono.variable} ${fraunces.variable} antialiased`}
-      >
+    <html lang="fr" className={abcDiatype.variable}>
+      <body className="antialiased">
         <Header />
         {children}
         <Footer />

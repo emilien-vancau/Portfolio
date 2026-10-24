@@ -26,7 +26,7 @@ export default function ProHome() {
             </h2>
           </div>
           
-          <p className="max-w-xl text-lg leading-relaxed text-[#364165]">
+          <p className="max-w-xl text-lg leading-relaxed text-[#364165] ">
             {identity.proTagline}
           </p>
           <div className="flex flex-wrap items-center gap-4 pt-2">

@@ -15,10 +15,10 @@
   --color-slate: #4a5578;  /* texte secondaire côté pro */
   --color-ember: #d9a86c;  /* accent chaud rare, "lumière d'étoile" côté astro */
 
-  --font-display-pro: var(--font-plex-sans);
-  --font-body: var(--font-plex-sans);
-  --font-mono: var(--font-plex-mono);
-  --font-display-astro: var(--font-fraunces);
+  --font-display-pro: var(--font-abc-diatype);
+  --font-body: var(--font-abc-diatype);
+  --font-mono: var(--font-abc-diatype);
+  --font-display-astro: var(--font-abc-diatype);
 }
 
 @theme inline {
@@ -37,10 +37,6 @@
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -112,7 +108,10 @@ body {
 /* label mono type utilitaire, façon coordonnées / métadonnées */
 .meta-label {
   font-family: var(--font-mono), ui-monospace, monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+}
+
+.tag-label {
+  font-size: 0.75rem;
 }
