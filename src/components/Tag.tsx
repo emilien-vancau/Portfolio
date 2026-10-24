@@ -11,7 +11,7 @@ export default function Tag({
     <span
       style={backgroundColor ? { backgroundColor } : undefined}
       className={
-        "meta-label tag-label inline-flex items-center rounded-full border px-2.5 py-1 cursor-text " +
+        "meta-label tag-label inline-flex items-center rounded-full border px-2.5 py-1 cursor-pointer" +
         (variant === "astro"
           ? "border-[#26315f] text-[#a7e0e7] "
           : "border-[#c9d2e0] text-[#2d3085] ") +

@@ -11,7 +11,7 @@ const NAV_LINKS_PRO = [
 ];
 
 const NAV_LINKS_ASTRO = [
-  { href: "/astro#gear", label: "Gear" },
+  { href: "/astro#about", label: "About" },
   { href: "/astro#observations", label: "Observations" },
   { href: "/astro#gallery", label: "Gallery"},
   { href: "/astro#contact", label: "Contact" },

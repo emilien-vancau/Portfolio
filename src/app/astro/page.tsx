@@ -69,7 +69,7 @@ export default function AstroHome() {
         <div className="relative z-10 mx-auto mt-10 max-w-7xl space-y-20">
 
           {/*HANDMADE ACQUISITION*/}
-          <article id="gear" className="scroll-mt-24 box-shadow-br grid overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
+          <article id="about" className="scroll-mt-24 box-shadow-br grid overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
           style={{
               backgroundImage: "url('/svgs/edge-card.svg#svgView(preserveAspectRatio(none))')",
               backgroundSize: "100% 100%",

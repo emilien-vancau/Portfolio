@@ -228,19 +228,19 @@ export const astroComparisonImages: ComparisonImage[] = [
   {
     src: "/imgs/M51_raw_rgb.jpg",
     alt: "Raw RGB image",
-    label: "Raw RGB image",
+    label: "Raw RGB",
     textPosition: "bottom",
   },
   {
     src: "/imgs/M51_stacked_rgb.jpg",
     alt: "Stacked RGB image",
-    label: "Stacked RGB image",
+    label: "Stacked RGB",
     textPosition: "bottom",
   },
   {
     src: "/imgs/M51_final_lrgb.jpg",
     alt: "Final LRGB image ",
-    label: "Final LRGB image ",
+    label: "Final LRGB",
     textPosition: "bottom",
   },
 ];
