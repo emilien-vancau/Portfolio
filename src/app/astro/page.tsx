@@ -157,14 +157,14 @@ export default function AstroHome() {
                 alt="NGC2903 RGB Annotated"
               />
               <img
-                className="block aspect-[4/3] h-full w-full object-cover rounded-bl-lg md:aspect-auto"
+                className="block aspect-[4/3] h-full w-full object-cover rounded-tr-lg md:aspect-auto"
                 src="/imgs/NGC5353_astromapper.png"
                 alt="NGC5353 Astromapper"
               />
               <div className="flex items-center p-6">
                 <div className="text-xl leading-relaxed text-[#9fb0d6]">
                   <p>{astroTexts.dataStorytelling.description2}</p>
-                  <ul className="mt-3 list-disc space-y-1 pl-4">
+                  <ul className="mt-3 list-disc space-y-1 pl-5">
                     {astroTexts.dataStorytelling.analysisOperations.map((operation) => (
                       <li key={operation.name}>
                         <span className="text-[#a7e0e7]">{operation.name}</span>{" "}
@@ -297,7 +297,7 @@ export default function AstroHome() {
               className="group flex items-center gap-4 rounded-xl border border-[#26315f] bg-[#0a1230] p-5 text-[#e5ebeb] transition-colors hover:border-[#a7e0e7] hover:bg-[#1B275E]"
             >
               <img
-                src="/icons/astrobin%20logo.png"
+                src="/icons/astrobin-logo.png"
                 alt=""
                 aria-hidden="true"
                 className="h-8 w-8 shrink-0 object-contain"

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Eyebrow from "@/components/Eyebrow";
 import Tag from "@/components/Tag";
 import ProjectCard from "@/components/ProjectCard";
 import FlowGradientVideo from "@/components/FlowGradientVideo";

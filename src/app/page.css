@@ -73,7 +73,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: url(data:image/png;base64,...) repeat;
+  
   background-size: 256px 256px;
   image-rendering: pixelated;
   mix-blend-mode: overlay;

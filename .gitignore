@@ -5,8 +5,12 @@
 !/public/bckgs/
 !/public/icons/
 !/public/svgs/
+!/public/imgs/
+!/public/gradients/
 
-/src/fonts
+
+/src/fonts/*
+!/src/fonts/geist/
 
 # dependencies
 /node_modules

@@ -15,10 +15,10 @@
   --color-slate: #4a5578;  /* texte secondaire côté pro */
   --color-ember: #d9a86c;  /* accent chaud rare, "lumière d'étoile" côté astro */
 
-  --font-display-pro: var(--font-abc-diatype);
-  --font-body: var(--font-abc-diatype);
-  --font-mono: var(--font-abc-diatype);
-  --font-display-astro: var(--font-abc-diatype);
+  --font-display-pro: var(--font-geist);
+  --font-body: var(--font-geist);
+  --font-mono: var(--font-geist);
+  --font-display-astro: var(--font-geist);
 }
 
 @theme inline {
