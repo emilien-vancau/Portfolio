@@ -1,10 +1,11 @@
-import Link from "next/link";
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
 import NorthernLightsLayer from "@/components/NorthernLightsLayer";
 import MultiImageComparison from "@/components/MultiImageComparison";
 import MasonryGallery from "@/components/MasonryGallery";
 import Punchline from "@/components/Punchline";
+import { assetPaths } from "@/lib/assets";
+import { withBase } from "@/lib/paths";
 import {
   identity,
   astroProjects,
@@ -53,12 +54,12 @@ export default function AstroHome() {
             >
               Contact me
             </a>
-            <Link
-              href="/"
+            <a
+              href={withBase("/")}
               className="text-sm text-[#a7e0e7] underline decoration-[#2d3085] decoration-2 underline-offset-4 hover:text-white md:ml-auto"
             >
               {"</>"} See also My IT World
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -71,7 +72,7 @@ export default function AstroHome() {
           {/*HANDMADE ACQUISITION*/}
           <article id="about" className="scroll-mt-24 box-shadow-br grid overflow-hidden bg-[#1B275E] border-l-4 rounded-tr-lg rounded-br-lg border-[#a7e0e7] md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
           style={{
-              backgroundImage: "url('/svgs/edge-card.svg#svgView(preserveAspectRatio(none))')",
+              backgroundImage: `url('${withBase(assetPaths.edgeCard)}#svgView(preserveAspectRatio(none))')`,
               backgroundSize: "100% 100%",
             }}
           >
@@ -103,8 +104,9 @@ export default function AstroHome() {
               </div>
               <img
                 className="h-64 w-full object-cover md:h-full md:min-h-0"
-                src="/imgs/setup.jpg"
+                src={withBase(assetPaths.setup)}
                 alt="setup1"
+                loading="lazy"
               />
             </div>
           </article>
@@ -135,8 +137,9 @@ export default function AstroHome() {
             <img
               aria-hidden="true"
               className="pointer-events-none absolute inset-y-0 left-1/2 z-0 h-full w-auto max-w-none -translate-x-1/2 opacity-10"
-              src="/bckgs/planisphere.jpg"
+              src={withBase(assetPaths.planisphere)}
               alt=""
+              loading="lazy"
             />
             <div className="relative z-10 grid gap-0 md:grid-cols-2">
               <div className="p-6">
@@ -153,13 +156,15 @@ export default function AstroHome() {
               </div>
               <img
                 className="block aspect-[4/3] h-full w-full object-cover rounded-bl-lg md:aspect-auto"
-                src="/imgs/NGC2903_RGB_Annotated.jpg"
+                src={withBase(assetPaths.ngc2903)}
                 alt="NGC2903 RGB Annotated"
+                loading="lazy"
               />
               <img
                 className="block aspect-[4/3] h-full w-full object-cover rounded-tr-lg md:aspect-auto"
-                src="/imgs/NGC5353_astromapper.png"
+                src={withBase(assetPaths.ngc5353)}
                 alt="NGC5353 Astromapper"
+                loading="lazy"
               />
               <div className="flex items-center p-6">
                 <div className="text-xl leading-relaxed text-[#9fb0d6]">
@@ -182,7 +187,7 @@ export default function AstroHome() {
             className="box-shadow-bl bg-[#1B275E] border-r-4 rounded-tl-lg rounded-bl-lg border-[#a7e0e7] p-6"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(27, 39, 94, 0.88), rgba(27, 39, 94, 0.88)), url('/bckgs/colab_bckg.jpg')",
+                `linear-gradient(rgba(27, 39, 94, 0.88), rgba(27, 39, 94, 0.88)), url('${withBase(assetPaths.collaborationBackground)}')`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -297,10 +302,11 @@ export default function AstroHome() {
               className="group flex items-center gap-4 rounded-xl border border-[#26315f] bg-[#0a1230] p-5 text-[#e5ebeb] transition-colors hover:border-[#a7e0e7] hover:bg-[#1B275E]"
             >
               <img
-                src="/icons/astrobin-logo.png"
+                src={withBase(assetPaths.astrobinLogo)}
                 alt=""
                 aria-hidden="true"
                 className="h-8 w-8 shrink-0 object-contain"
+                loading="lazy"
               />
               <span className="font-medium group-hover:text-[#a7e0e7]">AstroBin</span>
             </a>
@@ -314,7 +320,7 @@ export default function AstroHome() {
         <div
           className="relative mx-auto flex max-w-7xl flex-col items-start gap-6 rounded-xl bg-[#1B275E] bg-center p-16"
           style={{
-            backgroundImage: "url('/svgs/edge-card.svg#svgView(preserveAspectRatio(none))')",
+            backgroundImage: `url('${withBase(assetPaths.edgeCard)}#svgView(preserveAspectRatio(none))')`,
             backgroundSize: "100% 100%",
           }}
         >

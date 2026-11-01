@@ -1,3 +1,6 @@
+import { assetPaths } from "@/lib/assets";
+import { withBase } from "@/lib/paths";
+
 /**
  * Flow Gradient — video playback
  * --------------------------------
@@ -24,7 +27,7 @@ export default function FlowGradient() {
       // to play as soon as the component mounts.
       preload="auto"
     >
-      <source src="/gradients/flow-gradient-loop.mp4" type="video/mp4" />
+      <source src={withBase(assetPaths.flowGradientVideo)} type="video/mp4" />
     </video>
   );
 }

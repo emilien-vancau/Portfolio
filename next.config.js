@@ -1,10 +1,11 @@
+const basePath = process.env.NODE_ENV === "production" ? "/portfolio" : "";
+
 /** @type {import('next').NextConfig} */
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 module.exports = {
   output: "export",          // create folder /out
-  trailingSlash: true,       // /astro/ → astro/index.html, plus fiable sur Pages
-  images: { unoptimized: true }, // l'optimiseur next/image n'existe pas en statique
+  trailingSlash: true,       // /astro/ → astro/index.html, more viable for static hosting
+  images: { unoptimized: true }, 
   basePath,
-  assetPrefix: basePath || undefined,
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
 };

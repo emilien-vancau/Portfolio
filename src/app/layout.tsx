@@ -24,7 +24,7 @@ const geist = localFont({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://albireodse.github.io"),
+    metadataBase: new URL("https://emilien-vancau.github.io"),
     title: "Vancauwenberghe Emilien — AI Engineer & Amateur Astronomer",
     description:
       "Portfolio of my personal and professional projects, including my CV, contact information, and links to my social media profiles.",

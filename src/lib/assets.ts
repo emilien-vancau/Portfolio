@@ -1,0 +1,13 @@
+export const assetPaths = {
+  flowGradientVideo: "/gradients/flow-gradient-loop.mp4",
+  auroraGradientVideoMp4: "/gradients/aurora-gradient-loop.mp4",
+  auroraGradientVideoWebm: "/gradients/aurora-gradient-loop.webm",
+  silkCard: "/svgs/silk-card.svg",
+  edgeCard: "/svgs/edge-card.svg",
+  setup: "/imgs/setup.jpg",
+  planisphere: "/bckgs/planisphere.jpg",
+  ngc2903: "/imgs/NGC2903_RGB_Annotated.jpg",
+  ngc5353: "/imgs/NGC5353_astromapper.png",
+  collaborationBackground: "/bckgs/colab_bckg.jpg",
+  astrobinLogo: "/icons/astrobin-logo.png",
+} as const;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { GalleryImage } from "@/lib/data";
+import { withBase } from "@/lib/paths";
 
 export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
   return (
@@ -10,7 +11,7 @@ export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
           className="group relative mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-[#26315f] bg-[#101b3f] transition-all hover:border-[#a7e0e7]/50"
         >
           <Image
-            src={img.src}
+            src={withBase(img.src)}
             alt={img.alt}
             width={img.width}
             height={img.height}

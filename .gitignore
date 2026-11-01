@@ -7,6 +7,8 @@
 !/public/svgs/
 !/public/imgs/
 !/public/gradients/
+/public/gradients/aurora/
+/public/gradients/aurora-gradient-loop.*
 
 
 /src/fonts/*
