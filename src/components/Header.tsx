@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { withBase } from "@/lib/paths";
 
 const NAV_LINKS_PRO = [
   { href: "/#experience", label: "Experience" },
@@ -39,7 +39,7 @@ export default function Header() {
           {links.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={withBase(link.href)}
               className={
                 "whitespace-nowrap rounded-full px-3 py-2 text-xs transition-colors sm:px-4 sm:text-sm " +
                 (isAstro
@@ -77,8 +77,8 @@ function ThemeToggle({ isAstro }: { isAstro: boolean }) {
           (isAstro ? "translate-x-[92px] bg-[#2d3085]" : "translate-x-0 bg-[#152451]")
         }
       />
-      <Link
-        href="/"
+      <a
+        href={withBase("/")}
         aria-current={!isAstro}
         className={
           "relative z-10 flex w-[92px] items-center justify-center gap-1.5 rounded-full py-1.5 transition-colors " +
@@ -86,9 +86,9 @@ function ThemeToggle({ isAstro }: { isAstro: boolean }) {
         }
       >
         <span aria-hidden>{"</>"}</span> IT
-      </Link>
-      <Link
-        href="/astro"
+      </a>
+      <a
+        href={withBase("/astro")}
         aria-current={isAstro}
         className={
           "relative z-10 flex w-[92px] items-center justify-center gap-1.5 rounded-full py-1.5 transition-colors " +
@@ -96,7 +96,7 @@ function ThemeToggle({ isAstro }: { isAstro: boolean }) {
         }
       >
         <span aria-hidden>✦</span> Astro
-      </Link>
+      </a>
     </div>
   );
 }

@@ -1,10 +1,5 @@
 // ============================================================
-// CONTENU DU SITE
-// ------------------------------------------------------------
-// Cette première itération mélange une structure complète avec
-// du contenu provisoire. Chaque entrée marquée isDisplay: false est
-// un exemple à remplacer. Envoie-moi tes vraies infos (intitulés,
-// dates, descriptions, liens) et je les intègre directement ici.
+// Website content data file
 // ============================================================
 
 import { StatusType } from "@/components/StatusTag";
@@ -135,7 +130,7 @@ export const proProjects: {
     period: "",
     description:
       "Fully equipped Arduino-based weather station with anemometer, temperature sensor, photoresistor, barometer, rain sensor, wind vane, and hygrometer.",
-    tags: ["Arduino"],
+    tags: ["Arduino", "C++", "Embedded", "Electronics"],
     statusTag: StatusType.InReview,
     isDisplay: true,
   },
@@ -303,7 +298,7 @@ export const astroGallery: GalleryImage[] = [
     height: 1506,
   },
   {
-    src: "/imgs/pk 080-06.1.jpg",
+    src: "/imgs/pk_080-06-1.jpg",
     alt: "pk 080-06.1 protoplanetary nebula",
     title: "pk 080-06.1 - Protoplanetary Nebula",
     caption: "L • Newton 200/1000",
@@ -327,7 +322,7 @@ export const astroGallery: GalleryImage[] = [
     height: 681,
   },
   {
-    src: "/imgs/LBN 331.jpg",
+    src: "/imgs/LBN_331.jpg",
     alt: "LBN 331",
     title: "LBN 331",
     caption: "HaRGB • Newton 200/1000",
@@ -335,7 +330,7 @@ export const astroGallery: GalleryImage[] = [
     height: 681,
   },
   {
-    src: "/imgs/LDN673.jpg",
+    src: "/imgs/LDN_673.jpg",
     alt: "LDN 673",
     title: "LDN 673",
     caption: "L • Newton 200/1000",

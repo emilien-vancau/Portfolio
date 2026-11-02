@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import {
   createPrecomputedFlowGradientPlayer,
   precomputeFlowGradientFrames,
-} from "@/gradients/flow-gradient.js";
+} from "../../scripts/gradients/flow-gradient.js";
 
 const colors = ["#C9D2E0", "#9FB0D6", "#5d6ba8", "#293d80", "#C9D2E0"];
 

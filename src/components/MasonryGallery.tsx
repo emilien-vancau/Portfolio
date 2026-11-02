@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { GalleryImage } from "@/lib/data";
+import { withBase } from "@/lib/paths";
 
 export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
   return (
@@ -10,13 +11,17 @@ export default function MasonryGallery({ images }: { images: GalleryImage[] }) {
           className="group relative mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-[#26315f] bg-[#101b3f] transition-all hover:border-[#a7e0e7]/50"
         >
           <Image
-            src={img.src}
+            src={withBase(img.src)}
             alt={img.alt}
             width={img.width}
             height={img.height}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="block h-auto w-full"
-            loading={img.src === "/imgs/M51_final_lrgb.jpg" ? "eager" : "lazy"}
+            loading={
+              img.src === "/imgs/M51_final_lrgb.jpg" || img.src === "/imgs/OU4.jpg"
+                ? "eager"
+                : "lazy"
+            }
           />
 
           <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-1 bg-gradient-to-t from-[#0a1230]/90 via-[#0a1230]/50 to-transparent px-5 pb-4 pt-12 opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-within:opacity-100">

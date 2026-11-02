@@ -5,34 +5,37 @@ import "./page.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Police auto-hébergée : pas de dépendance à Google Fonts au runtime.
-const abcDiatype = localFont({
+// Geist auto-hébergée : pas de dépendance à Google Fonts au runtime.
+const geist = localFont({
   src: [
     {
-      path: "../fonts/abc-diatype/ABCDiatype-Regular.woff2",
-      weight: "400",
+      path: "../fonts/geist/Geist-VariableFont_wght.ttf",
+      weight: "100 900",
       style: "normal",
     },
     {
-      path: "../fonts/abc-diatype/ABCDiatype-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../fonts/abc-diatype/ABCDiatype-Bold.woff2",
-      weight: "700",
-      style: "normal",
+      path: "../fonts/geist/Geist-Italic-VariableFont_wght.ttf",
+      weight: "100 900",
+      style: "italic",
     },
   ],
-  variable: "--font-abc-diatype",
+  variable: "--font-geist",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Vancauwenberghe Emilien — AI Engineer & Amateur Astronomer",
-  description:
-    "Portfolio of my personal and professional projects, including my CV, contact information, and links to my social media profiles.",
-};
+    metadataBase: new URL("https://emilien-vancau.github.io"),
+    title: "Vancauwenberghe Emilien — AI Engineer & Amateur Astronomer",
+    description:
+      "Portfolio of my personal and professional projects, including my CV, contact information, and links to my social media profiles.",
+    openGraph: {
+      title: "Vancauwenberghe Emilien — AI Engineer & Amateur Astronomer",
+      description:
+        "Portfolio of my personal and professional projects, including my CV, contact information, and links to my social media profiles.",
+      url: "/",
+      type: "website",
+    },
+  };
 
 export default function RootLayout({
   children,
@@ -40,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={abcDiatype.variable}>
+    <html lang="en" className={geist.variable}>
       <body className="antialiased">
         <Header />
         {children}

@@ -1,3 +1,6 @@
+import { assetPaths } from "@/lib/assets";
+import { withBase } from "@/lib/paths";
+
 /**
  * Aurora Gradient — video playback
  * ---------------------------------
@@ -40,8 +43,8 @@ export default function AuroraGradient({ opacity = 1 }: AuroraGradientProps = {}
       // to play as soon as the component mounts.
       preload="auto"
     >
-      <source src="/gradients/aurora-gradient-loop.mp4" type="video/mp4" />
-      <source src="/gradients/aurora-gradient-loop.webm" type="video/webm" />
+      <source src={withBase(assetPaths.auroraGradientVideoMp4)} type="video/mp4" />
+      <source src={withBase(assetPaths.auroraGradientVideoWebm)} type="video/webm" />
     </video>
   );
 }

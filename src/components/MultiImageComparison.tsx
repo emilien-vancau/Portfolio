@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
+import { withBase } from "@/lib/paths";
 
 export type ComparisonImage = {
   src: string;
@@ -200,7 +201,7 @@ export default function MultiImageComparison({
             }}
           >
             <Image
-              src={image.src}
+              src={withBase(image.src)}
               alt={image.alt}
               fill
               draggable={false}

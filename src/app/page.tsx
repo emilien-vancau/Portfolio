@@ -1,9 +1,9 @@
-import Link from "next/link";
-import Eyebrow from "@/components/Eyebrow";
 import Tag from "@/components/Tag";
 import ProjectCard from "@/components/ProjectCard";
 import FlowGradientVideo from "@/components/FlowGradientVideo";
 import { identity, skills, workExperiences, proProjects, education } from "@/lib/data";
+import { assetPaths } from "@/lib/assets";
+import { withBase } from "@/lib/paths";
 
 export default function ProHome() {
   
@@ -42,12 +42,12 @@ export default function ProHome() {
             >
               Contact me
             </a>
-            <Link
-              href="/astro"
+            <a
+              href={withBase("/astro")}
               className="text-sm text-[#2d3085] underline decoration-[#a7e0e7] decoration-2 underline-offset-4 hover:text-[#152451] md:ml-auto"
             >
               ✦ Follow my exploration of the heavens
-            </Link>
+            </a>
           </div>
 
         </div>
@@ -169,7 +169,7 @@ export default function ProHome() {
           </h2>
           <div className="flex flex-wrap gap-4">
             <a
-              href="https://github.com/AlbireoDSE"
+              href="https://github.com/emilien-vancau"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit my GitHub profile (opens in a new tab)"
@@ -202,7 +202,7 @@ export default function ProHome() {
       <section id="contact" className="scroll-mt-24 px-6 py-24">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-3xl bg-[#152451] px-8 py-14 md:px-14"
           style={{
-            backgroundImage: "url('/svgs/silk-card.svg#svgView(preserveAspectRatio(none))')",
+            backgroundImage: `url('${withBase(assetPaths.silkCard)}#svgView(preserveAspectRatio(none))')`,
             backgroundSize: "100% 100%",
           }}
           >
