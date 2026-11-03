@@ -8,7 +8,7 @@ import type { ComparisonImage } from "@/components/MultiImageComparison";
 export const identity = {
   firstName: "Emilien",
   lastName: "Vancauwenberghe",
-  proTitle: "AI engineer | ML engineer | Software developer",
+  proTitle: "Engineer | AI, Machine Learning, Data & Software",
   proTagline:
     "Transforming data into intelligent solutions. AI & Machine Learning Engineer focused on building reliable, scalable, and impactful AI systems.",
   astroTagline:

@@ -22,7 +22,10 @@ export default function AstroHome() {
     <div className="theme-astro bg-[#0a1230]">
       {/* ---------------------------------------------------------- HERO */}
       <section className="relative mx-auto flex min-h-[calc(80vh-4rem)] flex-col justify-evenly overflow-hidden pb-24 pt-10 md:pt-15">
-        <NorthernLightsLayer />
+        <div style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%",
+              transform: "scale(2)", transformOrigin: "top left" }}>
+          <NorthernLightsLayer />
+        </div>
         <StarField count={130} className="z-10" />
         <div
           aria-hidden
