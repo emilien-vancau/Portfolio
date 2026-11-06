@@ -2,6 +2,8 @@ export const assetPaths = {
   flowGradientVideo: "/gradients/flow-gradient-loop.mp4",
   auroraGradientVideoMp4: "/gradients/aurora-gradient-loop.mp4",
   auroraGradientVideoWebm: "/gradients/aurora-gradient-loop.webm",
+  northernLightsVideo: "/gradients/northern-lights-loop.mp4",
+  northernLightsPoster: "/gradients/northern-lights-poster.jpg",
   silkCard: "/svgs/silk-card.svg",
   edgeCard: "/svgs/edge-card.svg",
   setup: "/imgs/setup.jpg",

@@ -1,6 +1,7 @@
 import ProjectCard from "@/components/ProjectCard";
 import StarField from "@/components/StarField";
 import NorthernLightsLayer from "@/components/NorthernLightsLayer";
+import NorthernLightsVideo from "@/components/NorthernLightsVideo";
 import MultiImageComparison from "@/components/MultiImageComparison";
 import MasonryGallery from "@/components/MasonryGallery";
 import Punchline from "@/components/Punchline";
@@ -22,10 +23,7 @@ export default function AstroHome() {
     <div className="theme-astro bg-[#0a1230]">
       {/* ---------------------------------------------------------- HERO */}
       <section className="relative mx-auto flex min-h-[calc(80vh-4rem)] flex-col justify-evenly overflow-hidden pb-24 pt-10 md:pt-15">
-        <div style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%",
-              transform: "scale(2)", transformOrigin: "top left" }}>
-          <NorthernLightsLayer />
-        </div>
+        <NorthernLightsVideo />
         <StarField count={130} className="z-10" />
         <div
           aria-hidden
