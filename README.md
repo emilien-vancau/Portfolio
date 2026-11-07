@@ -66,6 +66,34 @@ npm run start
 npm run lint
 ```
 
+### Generating gradients
+
+The animated gradients are pre-rendered into files under `public/gradients/`.
+Install the project dependencies and make sure `ffmpeg` is available on your
+`PATH`. The aurora video renderer requires FFmpeg with the `libvpx-vp9` and
+`libx264` encoders. The Northern Lights renderer also requires Playwright's
+Chromium browser:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Run the relevant command to regenerate an asset:
+
+```bash
+# Flow gradient (public/gradients/flow-gradient-loop.mp4)
+node scripts/gradients/render-flow-gradient-video.mjs
+
+# Aurora gradient (WebM with transparency and MP4 fallback)
+node scripts/gradients/old-render-aurora-gradient-video.mjs
+
+# Northern Lights (public/gradients/northern-lights-loop.mp4)
+npm run render:aurora
+```
+
+These commands overwrite the corresponding files in `public/gradients/`.
+
 ## Customising the content
 
 Most of the text, projects, experience and gallery entries live in `src/lib/data.ts`. Edit that file to update the site without touching the components.

@@ -4,7 +4,7 @@ import { build } from "esbuild";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
 
-const W = 1280, H = 720, FPS = 40;
+const W = 1620, H = 800, FPS = 35;
 const LOOP_S = 30; // durée de la boucle
 const FADE_S = 10;  // durée du fondu de raccord
 const OUT = "public/gradients/northern-lights-loop.mp4";
@@ -68,12 +68,17 @@ const ff = spawn("ffmpeg", [
   "-crf", "24", "-preset", "slow", "-movflags", "+faststart", "-an", OUT,
 ], { stdio: ["pipe", "inherit", "inherit"] });
 
+const F0 = L - C; // index de la première image du fondu
+
 for (let i = 0; i < L; i++) {
-  const fading = i < C;
-  // début de boucle : on part de la suite de la fin (t_{i+L}) et on fond vers t_i
+  const fading = i >= F0;
+  // fin de boucle : on fond de t_i vers t_{i-L} (le temps juste avant le début),
+  // pour que la dernière image soit continue avec la toute première.
   const dataUrl = await page.evaluate(
     ([a, b, w]) => window.renderFrame(a, b, w),
-    fading ? [tAt(i + L), tAt(i), smooth(i / C)] : [tAt(i), null, 0],
+    fading
+      ? [tAt(i), tAt(i - L), smooth((i - F0 + 1) / C)]
+      : [tAt(i), null, 0],
   );
   const buf = Buffer.from(dataUrl.split(",")[1], "base64");
   if (!ff.stdin.write(buf)) await once(ff.stdin, "drain");
